@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "sdkVersion": "20.0.0",
+    "name": "UBaeZi",
+    "slug": "ubaezi",
+    "privacy": "unlisted",
+    "version": "0.4.0",
+    "android": {
+      "package": "com.xogus.ubaezi",
+      "versionCode": 21
+    }
+  }
+}

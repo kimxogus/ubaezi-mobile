@@ -1,0 +1,34 @@
+{
+  "name": "ubaezi",
+  "version": "0.4.0",
+  "private": true,
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "dotenv-cli": "^1.4.0",
+    "eslint": "^4.5.0",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-prettier": "^2.2.0",
+    "jest-expo": "~20.0.0",
+    "prettier": "^1.5.3",
+    "react-native-scripts": "1.2.1",
+    "react-test-renderer": "16.0.0-alpha.12"
+  },
+  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
+  "scripts": {
+    "start": "dotenv -e .env react-native-scripts start",
+    "eject": "dotenv -e .env react-native-scripts eject",
+    "android": "dotenv -e .env react-native-scripts android",
+    "ios": "dotenv -e .env react-native-scripts ios",
+    "lint": "dotenv -e .env eslint .",
+    "test": "dotenv -e .env jest --watch"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "dependencies": {
+    "eslint-config-react-native-prettier": "^1.0.1",
+    "expo": "^20.0.0",
+    "react": "16.0.0-alpha.12",
+    "react-native": "^0.47.0"
+  }
+}
