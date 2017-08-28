@@ -4,7 +4,8 @@ import { addNavigationHelpers } from 'react-navigation';
 
 import store from 'store';
 
-import AppNavigator from 'Navigator/AppNavigator';
+import InitShell from 'component/InitShell';
+import AppNavigator from 'navigator/AppNavigator';
 
 class App extends Component {
   render() {
@@ -29,7 +30,9 @@ export default class Root extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AppWithNavigationState />
+        <InitShell>
+          <AppWithNavigationState />
+        </InitShell>
       </Provider>
     );
   }
