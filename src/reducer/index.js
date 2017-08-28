@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import RootNavigator from 'Navigator/RootNavigator';
+import AppNavigator from 'Navigator/AppNavigator';
 
-const initialState = RootNavigator.router.getStateForAction(
-  RootNavigator.router.getActionForPathAndParams(RootNavigator.initialRouteName)
+const initialState = AppNavigator.router.getStateForAction(
+  AppNavigator.router.getActionForPathAndParams(AppNavigator.initialRouteName)
 );
 
 const navReducer = (state = initialState, action) => {
-  const nextState = RootNavigator.router.getStateForAction(action, state);
+  const nextState = AppNavigator.router.getStateForAction(action, state);
   return nextState || state;
 };
 

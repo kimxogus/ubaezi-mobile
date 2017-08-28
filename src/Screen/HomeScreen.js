@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import { Constants } from 'expo';
 
-const Container = styled.View`
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
+import TabNavigator from 'Navigator/TabNavigator';
 
-const T = styled.Text`flex: 1;`;
+export default class HomeScreen extends Component {
+  static navigationOptions = {
+    headerStyle: {
+      height: 0,
+      marginTop: Constants.statusBarHeight,
+    },
+  };
 
-export default () =>
-  <Container>
-    <T>Hi!</T>
-  </Container>;
+  render() {
+    return <TabNavigator />;
+  }
+}

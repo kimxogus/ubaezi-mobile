@@ -4,14 +4,14 @@ import { addNavigationHelpers } from 'react-navigation';
 
 import store from 'store';
 
-import RootNavigator from 'Navigator/RootNavigator';
+import AppNavigator from 'Navigator/AppNavigator';
 
 class App extends Component {
   render() {
     const { dispatch, nav } = this.props;
 
     return (
-      <RootNavigator
+      <AppNavigator
         navigation={addNavigationHelpers({
           dispatch,
           state: nav,
