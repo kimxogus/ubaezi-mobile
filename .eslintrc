@@ -6,11 +6,7 @@
     "codeFrame": false
   },
   "plugins": ["react", "prettier"],
-  "extends": [
-    "prettier",
-    "prettier/react",
-    "react-native-prettier"
-  ],
+  "extends": ["prettier", "prettier/react", "react-native-prettier"],
   "env": {
     "es6": true,
     "browser": true,

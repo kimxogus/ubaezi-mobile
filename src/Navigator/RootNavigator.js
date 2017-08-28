@@ -2,13 +2,19 @@ import { StackNavigator } from 'react-navigation';
 
 import HomeScreen from 'Screen/HomeScreen';
 
-export default StackNavigator(
+const initialRouteName = 'Home';
+
+const RootNavigator = StackNavigator(
   {
     Home: {
       screen: HomeScreen,
     },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName,
   }
 );
+
+RootNavigator.initialRouteName = initialRouteName;
+
+export default RootNavigator;

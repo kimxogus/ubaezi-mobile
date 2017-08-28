@@ -1,5 +1,13 @@
 {
-  "plugins": [["module-resolver", { "root": ["./src"] }]],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "extensions": [".js", ".ios.js", ".android.js"]
+      }
+    ]
+  ],
   "presets": ["babel-preset-expo"],
   "env": {
     "development": {
