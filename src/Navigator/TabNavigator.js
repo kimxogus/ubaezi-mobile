@@ -11,10 +11,10 @@ const AppNavigator = TabNavigator(
     Favorite: {
       screen: FavoriteScreen,
     },
-    StoreListScreen: {
+    StoreList: {
       screen: StoreListScreen,
     },
-    SettingsScreen: {
+    Settings: {
       screen: SettingsScreen,
     },
   },
