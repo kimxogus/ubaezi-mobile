@@ -1,9 +1,5 @@
 {
   "compilerOptions": {
     "baseUrl": "./src/"
-  },
-  "typeAcquisition": {
-    "enable": true,
-    "include": ["node_modules"]
   }
 }

@@ -7,8 +7,6 @@
   },
   "plugins": ["react", "prettier"],
   "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
     "prettier",
     "prettier/react",
     "react-native-prettier"
