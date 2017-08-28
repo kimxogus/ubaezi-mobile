@@ -1,4 +1,4 @@
-import { SET_USER } from 'action/user';
+import { SET_USER } from 'redux/action/user';
 
 const userReducer = (state = null, { type, payload }) => {
   switch (type) {

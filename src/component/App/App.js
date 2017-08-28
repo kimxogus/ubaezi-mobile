@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
 import { addNavigationHelpers } from 'react-navigation';
 
-import store from 'store';
+import store from 'redux/store';
 
 import InitShell from 'component/InitShell';
 import AppNavigator from 'component/Navigator/AppNavigator';

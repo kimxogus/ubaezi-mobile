@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import firebase from 'lib/firebase';
-import { initApp as initAppAC } from 'action/initApp';
-import { setUser as setUserAC } from 'action/user';
+import { initApp as initAppAC } from 'redux/action/initApp';
+import { setUser as setUserAC } from 'redux/action/user';
 
 const Container = BaseComponent => {
   class InitShellContainer extends Component {
