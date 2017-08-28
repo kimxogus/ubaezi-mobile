@@ -1,4 +1,4 @@
-import AppNavigator from 'component/navigator/AppNavigator';
+import AppNavigator from 'component/Navigator/AppNavigator';
 
 const initialState = AppNavigator.router.getStateForAction(
   AppNavigator.router.getActionForPathAndParams(AppNavigator.initialRouteName)

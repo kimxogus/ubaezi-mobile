@@ -1,7 +1,7 @@
 import { StackNavigator } from 'react-navigation';
 import { Constants } from 'expo';
 
-import HomeScreen from 'component/screen/HomeScreen';
+import HomeScreen from 'component/Screen/HomeScreen';
 
 const initialRouteName = 'Home';
 
