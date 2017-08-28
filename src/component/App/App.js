@@ -5,7 +5,7 @@ import { addNavigationHelpers } from 'react-navigation';
 import store from 'store';
 
 import InitShell from 'component/InitShell';
-import AppNavigator from 'navigator/AppNavigator';
+import AppNavigator from 'component/navigator/AppNavigator';
 
 class App extends Component {
   render() {

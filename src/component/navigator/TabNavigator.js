@@ -1,8 +1,8 @@
 import { TabNavigator } from 'react-navigation';
 
-import FavoriteScreen from 'screen/FavoriteScreen';
-import StoreListScreen from 'screen/StoreListScreen';
-import SettingsScreen from 'screen/SettingsScreen';
+import FavoriteScreen from 'component/screen/FavoriteScreen';
+import StoreListScreen from 'component/screen/StoreListScreen';
+import SettingsScreen from 'component/screen/SettingsScreen';
 
 const initialRouteName = 'Favorite';
 
