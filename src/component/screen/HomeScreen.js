@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Constants } from 'expo';
 
-import TabNavigator from 'component/NavigatorTabNavigator';
+import TabNavigator from 'component/Navigator/TabNavigator';
 
 export default class HomeScreen extends Component {
   static navigationOptions = {
