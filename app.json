@@ -26,6 +26,18 @@
         }
       }
     },
-    "facebookScheme": "${facebookScheme}"
+    "facebookScheme": "${facebookScheme}",
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "ubaezi",
+            "project": "ubaezi-react-native",
+            "authToken": "${sentryAuthToken}"
+          }
+        }
+      ]
+    }
   }
 }

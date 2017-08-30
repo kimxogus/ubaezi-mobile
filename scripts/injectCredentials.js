@@ -4,7 +4,7 @@ import injectEnv from 'inject-env';
 
 const appRoot = path.join(__dirname, '..');
 const appSrc = path.join(appRoot, 'src');
-const appCredentials = path.join(appSrc, 'credentials');
+const appCredentials = path.join(appSrc, 'credential');
 const appJson = path.join(appRoot, 'app.json');
 
 fs

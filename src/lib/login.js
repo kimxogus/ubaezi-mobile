@@ -2,8 +2,8 @@ import { Google, Facebook } from 'expo';
 
 import firebase from 'lib/firebase';
 
-import googleCredentials from 'credentials/google';
-import facebookCredentials from 'credentials/facebook';
+import googleCredentials from 'credential/google';
+import facebookCredentials from 'credential/facebook';
 
 const google = async () => {
   try {

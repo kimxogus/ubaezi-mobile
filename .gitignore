@@ -4,5 +4,5 @@ npm-debug.*
 .DS_Store
 yarn-error.log*
 .vscode
-src/credentials/*
-!src/credentials/.empty
+src/credential/*
+!src/credential/.empty
