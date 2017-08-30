@@ -8,11 +8,24 @@
     "scheme": "ubeazi",
     "android": {
       "package": "io.xogus.ubaezi",
-      "versionCode": 21
+      "versionCode": 21,
+      "config": {
+        "fabric": {},
+        "googleSignIn": {
+          "apiKey": "${androidGoogleApiKey}",
+          "certificateHash": "${androidCertificateHash}"
+        }
+      }
     },
     "ios": {
       "bundleIdentifier": "io.xogus.ubaezi",
-      "buildNumber": 21
-    }
+      "buildNumber": 21,
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "${iosReservedClientId}"
+        }
+      }
+    },
+    "facebookScheme": "${facebookScheme}"
   }
 }
