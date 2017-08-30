@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import firebase from 'lib/firebase';
 
-export default BaseComponent => {
+export default ({ schema }) => BaseComponent => {
   return class extends Component {
     static propTypes = {
       path: PropTypes.string.isRequired,
