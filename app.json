@@ -5,9 +5,14 @@
     "slug": "ubaezi",
     "privacy": "unlisted",
     "version": "0.4.0",
+    "scheme": "ubeazi",
     "android": {
-      "package": "com.xogus.ubaezi",
+      "package": "io.xogus.ubaezi",
       "versionCode": 21
+    },
+    "ios": {
+      "bundleIdentifier": "io.xogus.ubaezi",
+      "buildNumber": 21
     }
   }
 }

@@ -5,3 +5,4 @@ npm-debug.*
 yarn-error.log*
 .vscode
 src/credentials/*.js*
+src/credentials/*.keystore
