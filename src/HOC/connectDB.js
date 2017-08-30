@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 
 import firebase from 'lib/firebase';
 
-export default ({ schema }) => BaseComponent => {
+export default ({ schema } = {}) => BaseComponent => {
   return class extends Component {
     static propTypes = {
       path: PropTypes.string.isRequired,
+      queryProcessor: PropTypes.func,
+    };
+
+    static defaultProps = {
+      queryProcessor: null,
     };
 
     state = {
@@ -15,11 +20,17 @@ export default ({ schema }) => BaseComponent => {
     };
 
     async componentDidMount() {
-      const { path } = this.props;
-      const data = await firebase.database().ref(path).on('value');
-      this.setState({
-        loading: false,
-        data,
+      const { path, queryProcessor } = this.props;
+      let query = firebase.database().ref(path);
+      if (queryProcessor) {
+        query = queryProcessor(query);
+      }
+      query.on('value', snapshot => {
+        const data = snapshot;
+        this.setState({
+          loading: false,
+          data,
+        });
       });
     }
 

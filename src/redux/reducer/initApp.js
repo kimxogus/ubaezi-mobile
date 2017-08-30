@@ -1,4 +1,4 @@
-import { INIT_APP } from 'redux/action/user';
+import { INIT_APP } from 'redux/action/type';
 
 const initAppReducer = (state = false, { type }) => {
   switch (type) {
