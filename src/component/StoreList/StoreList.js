@@ -1,14 +1,46 @@
-import React, { Component } from 'react';
-import { FlatList, Text } from 'react-native';
+import React, { PureComponent } from 'react';
+import { FlatList } from 'react-native';
+import styled from 'styled-components/native';
 
-export default class StoreList extends Component {
+const StoreItemWrapper = styled.View`
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+`;
+
+const StoreItemName = styled.Text`font-size: 12px;`;
+
+class StoreItem extends PureComponent {
+  render() {
+    const { item: { name } } = this.props;
+    return (
+      <StoreItemWrapper>
+        <StoreItemName>{name}</StoreItemName>
+      </StoreItemWrapper>
+    );
+  }
+}
+
+export default class StoreList extends PureComponent {
+  keyExtractor(item) {
+    return item.id;
+  }
+
+  renderItem = ({ item }) => <StoreItem item={item} />;
+
   render() {
     const { loading, data } = this.props;
 
     if (loading) {
       return null;
-    } else {
-      return <Text>{JSON.stringify(data)}</Text>;
     }
+
+    return (
+      <FlatList
+        data={data}
+        renderItem={this.renderItem}
+        keyExtractor={this.keyExtractor}
+      />
+    );
   }
 }

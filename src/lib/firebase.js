@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 
-import credential from 'credential/firebase';
+import credential from 'credential/firebase.json';
 
 firebase.initializeApp(credential);
 

@@ -13,7 +13,7 @@
         "fabric": {},
         "googleSignIn": {
           "apiKey": "${androidGoogleApiKey}",
-          "certificateHash": "${androidCertificateHash}"
+          "certificateHash": "${androidGoogleCertificateHash}"
         }
       }
     },

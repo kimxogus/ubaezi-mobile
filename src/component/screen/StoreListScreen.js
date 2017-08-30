@@ -33,7 +33,6 @@ export default class StoreListScreen extends Component {
   render() {
     return (
       <Container>
-        <T>Favorite</T>
         <StoreList path="/stores" queryProcessor={this.processQuery} />
       </Container>
     );

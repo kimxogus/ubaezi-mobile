@@ -8,7 +8,7 @@ import store from 'redux/store';
 import InitShell from 'component/InitShell';
 import AppNavigator from 'component/Navigator/AppNavigator';
 
-import sentryConfig from 'credential/sentry';
+import sentryConfig from 'credential/sentry.json';
 
 Sentry.config(sentryConfig.publicDsn).install();
 
