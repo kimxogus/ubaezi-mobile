@@ -15,8 +15,9 @@ const T = styled.Text`flex: 1;`;
 
 export default class SettingsScreen extends Component {
   static navigationOptions = {
-    tabBarIcon: ({ tintColor }) =>
-      <FontAwesome name="cog" size={sizes.icon} color={tintColor} />,
+    tabBarIcon: ({ tintColor }) => (
+      <FontAwesome name="cog" size={sizes.icon} color={tintColor} />
+    ),
   };
 
   render() {

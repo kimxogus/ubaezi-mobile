@@ -17,8 +17,9 @@ const T = styled.Text`flex: 1;`;
 
 export default class StoreListScreen extends Component {
   static navigationOptions = {
-    tabBarIcon: ({ tintColor }) =>
-      <FontAwesome name="list" size={sizes.icon} color={tintColor} />,
+    tabBarIcon: ({ tintColor }) => (
+      <FontAwesome name="list" size={sizes.icon} color={tintColor} />
+    ),
   };
 
   processQuery = q => {

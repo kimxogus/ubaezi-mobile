@@ -8,11 +8,7 @@ export default class StoreList extends Component {
     if (loading) {
       return null;
     } else {
-      return (
-        <Text>
-          {JSON.stringify(data)}
-        </Text>
-      );
+      return <Text>{JSON.stringify(data)}</Text>;
     }
   }
 }

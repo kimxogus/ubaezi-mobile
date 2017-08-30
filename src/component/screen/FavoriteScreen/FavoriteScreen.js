@@ -17,8 +17,9 @@ const T = styled.Text`flex: 1;`;
 
 export default class FavoriteScreen extends Component {
   static navigationOptions = {
-    tabBarIcon: ({ tintColor }) =>
-      <FontAwesome name="star" size={sizes.icon} color={tintColor} />,
+    tabBarIcon: ({ tintColor }) => (
+      <FontAwesome name="star" size={sizes.icon} color={tintColor} />
+    ),
   };
 
   processQuery(q) {
@@ -30,12 +31,14 @@ export default class FavoriteScreen extends Component {
     return (
       <Container>
         <T>Favorite</T>
-        {user && user.uid
-          ? <StoreList
-              path={`/users/${user.uid}/favorites/stores`}
-              queryProcessor={this.processQuery}
-            />
-          : <T>Login!</T>}
+        {user && user.uid ? (
+          <StoreList
+            path={`/users/${user.uid}/favorites/stores`}
+            queryProcessor={this.processQuery}
+          />
+        ) : (
+          <T>Login!</T>
+        )}
       </Container>
     );
   }
