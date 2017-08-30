@@ -2193,9 +2193,9 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
-expo@^20.0.3:
-  version "20.0.3"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-20.0.3.tgz#fda84e1cea508fb2ccc32b5e157baffd539d83bc"
+expo@^20.0.4:
+  version "20.0.4"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-20.0.4.tgz#2fac82a7792c732c8274430705035fb7a2b29a08"
   dependencies:
     "@expo/vector-icons" "^5.0.0"
     babel-preset-expo "^3.0.0"
@@ -4655,9 +4655,9 @@ prettier@^1.5.2:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.5.3.tgz#59dadc683345ec6b88f88b94ed4ae7e1da394bfe"
 
-prettier@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.6.0.tgz#23e9c68251f440feb847f558821bead21765919a"
+prettier@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.6.1.tgz#850f411a3116226193e32ea5acfc21c0f9a76d7d"
 
 pretty-format@^20.0.3:
   version "20.0.3"
@@ -6213,7 +6213,7 @@ websocket-extensions@>=0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.1.tgz#76899499c184b6ef754377c2dbb0cd6cb55d29e7"
 
-websql@expo/node-websql#18.0.0:
+"websql@github:expo/node-websql#18.0.0":
   version "0.4.4"
   resolved "https://codeload.github.com/expo/node-websql/tar.gz/e364fa65146a9e2157a19e5c719e7702c2b6b87a"
   dependencies:
