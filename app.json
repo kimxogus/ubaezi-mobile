@@ -8,7 +8,7 @@
     "scheme": "ubeazi",
     "android": {
       "package": "io.xogus.ubaezi",
-      "versionCode": 21,
+      "versionCode": "${buildNumber}",
       "config": {
         "fabric": {},
         "googleSignIn": {
@@ -19,7 +19,7 @@
     },
     "ios": {
       "bundleIdentifier": "io.xogus.ubaezi",
-      "buildNumber": 21,
+      "buildNumber": "${buildNumber}",
       "config": {
         "googleSignIn": {
           "reservedClientId": "${iosReservedClientId}"

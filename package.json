@@ -23,8 +23,8 @@
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
     "revert-app-json": "babel-node scripts/revertAppJson",
-    "inject-cred": "babel-node scripts/injectCredentials",
-    "prestart": "yarn inject-cred",
+    "process-app-json": "babel-node scripts/processAppJson",
+    "prestart": "yarn process-app-json",
     "start": "dotenv -e .env react-native-scripts start",
     "eject": "dotenv -e .env react-native-scripts eject",
     "android": "dotenv -e .env react-native-scripts android",
@@ -32,9 +32,7 @@
     "lint": "dotenv -e .env eslint .",
     "test": "dotenv -e .env jest --watch"
   },
-  "pre-commit": [
-    "revert-app-json"
-  ],
+  "pre-commit": ["revert-app-json"],
   "jest": {
     "preset": "jest-expo",
     "transformIgnorePatterns": [
