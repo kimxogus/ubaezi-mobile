@@ -30,10 +30,9 @@ if (fs.existsSync(appJsonBackup)) {
   fs.copySync(appJson, appJsonBackup);
 }
 
-let appJsonData = fs.readFileSync(appJson, 'utf-8');
-while (appJsonData.indexOf('"${buildNumber}"') !== -1) {
-  appJsonData = appJsonData.replace('"${buildNumber}"', '${buildNumber}');
-}
+const appJsonData = fs
+  .readFileSync(appJson, 'utf-8')
+  .replace('"${buildNumberInteger}"', '${buildNumber}');
 fs.writeJSONSync(appJson, JSON.parse(injectEnv(appJsonData)), {
   spaces: 2,
 });
