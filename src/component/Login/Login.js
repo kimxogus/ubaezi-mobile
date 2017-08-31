@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+import { google, facebook } from 'lib/login';
 
 const styles = {
   iconSize: 60,
@@ -36,10 +39,26 @@ const Content = styled.Text`
 `;
 
 export default class Login extends Component {
+  googleLogin = () => {
+    try {
+      google();
+    } catch (e) {
+      Alert.alert('로그인이 실패하였습니다.\n잠시후에 다시 시도해주세요ㅜㅜ');
+    }
+  };
+
+  facebookLogin = () => {
+    try {
+      facebook();
+    } catch (e) {
+      Alert.alert('로그인이 실패하였습니다.\n잠시후에 다시 시도해주세요ㅜㅜ');
+    }
+  };
+
   render() {
     return (
       <Container>
-        <Button>
+        <Button onPress={this.googleLogin}>
           <ContentWrapper>
             <Content>
               <MaterialCommunityIcons name="google" size={styles.iconSize} />
@@ -48,7 +67,7 @@ export default class Login extends Component {
             <Content>구글 로그인</Content>
           </ContentWrapper>
         </Button>
-        <Button>
+        <Button onPress={this.facebookLogin}>
           <ContentWrapper>
             <Content>
               <MaterialCommunityIcons name="facebook" size={styles.iconSize} />
