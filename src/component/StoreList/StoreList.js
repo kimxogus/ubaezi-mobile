@@ -22,9 +22,7 @@ class StoreItem extends PureComponent {
 }
 
 export default class StoreList extends PureComponent {
-  keyExtractor(item) {
-    return item.id;
-  }
+  keyExtractor = item => item.id;
 
   renderItem = ({ item }) => <StoreItem item={item} />;
 
