@@ -8,7 +8,11 @@ import facebookCredentials from 'credential/facebook.json';
 const google = async () => {
   try {
     const { type, accessToken } = await Google.logInAsync({
-      ...googleCredentials,
+      behavior: 'native',
+      androidClientId: googleCredentials.androidClientId,
+      iosClientId: googleCredentials.iosClientId,
+      androidStandaloneAppClientId: googleCredentials.androidClientId,
+      iosStandaloneAppClientId: googleCredentials.iosClientId,
       scopes: ['profile', 'email'],
     });
 

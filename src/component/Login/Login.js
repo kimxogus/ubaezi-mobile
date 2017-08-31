@@ -39,21 +39,11 @@ const Content = styled.Text`
 `;
 
 export default class Login extends Component {
-  googleLogin = () => {
-    try {
-      google();
-    } catch (e) {
-      Alert.alert('로그인이 실패하였습니다.\n잠시후에 다시 시도해주세요ㅜㅜ');
-    }
-  };
+  googleLogin = () =>
+    google().catch(() => Alert.alert('', '로그인이 실패하였습니다.\n잠시후에 다시 시도해주세요ㅜㅜ'));
 
-  facebookLogin = () => {
-    try {
-      facebook();
-    } catch (e) {
-      Alert.alert('로그인이 실패하였습니다.\n잠시후에 다시 시도해주세요ㅜㅜ');
-    }
-  };
+  facebookLogin = () =>
+    facebook().catch(() => Alert.alert('', '로그인이 실패하였습니다.\n잠시후에 다시 시도해주세요ㅜㅜ'));
 
   render() {
     return (
