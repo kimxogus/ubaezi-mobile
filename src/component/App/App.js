@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
 import { addNavigationHelpers } from 'react-navigation';
 import Sentry from 'sentry-expo';
+import { ThemeProvider } from 'styled-components';
 
 import store from 'redux/store';
+import { theme } from 'styles';
 
 import InitShell from 'component/InitShell';
 import AppNavigator from 'component/Navigator/AppNavigator';
@@ -34,11 +36,13 @@ const AppWithNavigationState = connect(mapStateToProps)(App);
 export default class Root extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <InitShell>
-          <AppWithNavigationState />
-        </InitShell>
-      </Provider>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <InitShell>
+            <AppWithNavigationState />
+          </InitShell>
+        </Provider>
+      </ThemeProvider>
     );
   }
 }

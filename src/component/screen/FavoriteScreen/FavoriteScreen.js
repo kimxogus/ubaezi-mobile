@@ -5,15 +5,14 @@ import { FontAwesome } from '@expo/vector-icons';
 import { sizes } from 'styles';
 
 import StoreList from 'component/StoreList';
+import Login from 'component/Login';
 
 const Container = styled.View`
   display: flex;
   flex: 1;
+  align-items: stretch;
   justify-content: center;
-  align-items: center;
 `;
-
-const T = styled.Text`flex: 1;`;
 
 export default class FavoriteScreen extends Component {
   static navigationOptions = {
@@ -30,14 +29,13 @@ export default class FavoriteScreen extends Component {
     const { user } = this.props;
     return (
       <Container>
-        <T>Favorite</T>
         {user && user.uid ? (
           <StoreList
             path={`/users/${user.uid}/favorites/stores`}
             queryProcessor={this.processQuery}
           />
         ) : (
-          <T>Login!</T>
+          <Login />
         )}
       </Container>
     );
