@@ -5,7 +5,7 @@ import Sentry from 'sentry-expo';
 import { ThemeProvider } from 'styled-components';
 
 import store from 'redux/store';
-import { theme } from 'styles';
+import { theme } from 'styles/theme';
 
 import InitShell from 'component/InitShell';
 import AppNavigator from 'component/Navigator/AppNavigator';
