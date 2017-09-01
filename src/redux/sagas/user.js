@@ -1,9 +1,9 @@
-import { call, put, take, fork, select, takeLatest } from 'redux-saga/effects';
+import { call, put, take, fork, select } from 'redux-saga/effects';
 
 import rsf from 'lib/sagaFirebase';
 
-import { LOGOUT } from 'redux/action/type';
-import { setUser, setUserData, clearUserData } from 'redux/action/user';
+import { setUser } from 'redux/action/user';
+import { setUserData, clearUserData } from 'redux/action/userData';
 import { initApp as initAppAC } from 'redux/action/initApp';
 
 const getInit = ({ initApp }) => initApp;
