@@ -10,10 +10,8 @@ const Container = styled.View`
   display: flex;
   flex: 1;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
 `;
-
-const T = styled.Text`flex: 1;`;
 
 export default class StoreListScreen extends Component {
   static navigationOptions = {

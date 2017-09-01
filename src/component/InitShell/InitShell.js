@@ -1,15 +1,33 @@
-import { Component, Children } from 'react';
+import React, { Component } from 'react';
 import { Linking, Alert } from 'react-native';
 import VersionCheck from 'react-native-version-check/expo';
 
 import firebase from 'lib/firebase';
+import progressive from 'HOC/progressive';
 
 export default class InitShell extends Component {
+  state = {
+    loading: false,
+  };
+
   async componentDidMount() {
     // firebase
     firebase.auth().onAuthStateChanged(user => {
-      const { init, initApp, setUser } = this.props;
+      const { init, initApp, setUser, setUserData, clearUserData } = this.props;
       setUser(user);
+      clearUserData();
+      if (user && user.uid) {
+        this.setState({ loading: true });
+        firebase
+          .database()
+          .ref(`/users/${user.uid}`)
+          .once('value', snapshot => {
+            if (snapshot.exists()) {
+              setUserData(snapshot.val());
+            }
+            this.setState({ loading: false });
+          });
+      }
       if (!init) initApp();
     });
 
@@ -39,7 +57,7 @@ export default class InitShell extends Component {
   }
 
   render() {
-    const { children } = this.props;
-    return (children && Children.only(children)) || null;
+    const Children = progressive(this.props.children);
+    return <Children {...this.props} {...this.state} />;
   }
 }

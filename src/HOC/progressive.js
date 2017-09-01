@@ -12,11 +12,16 @@ const Progress = styled.ActivityIndicator.attrs({
   size: 125,
   color: theme.bg,
 })`
-
+  position: relative;
+  height: 100%;
 `;
 
 export default BaseComponent => ({ loading = false, ...otherProps }) => {
-  const c = <BaseComponent {...otherProps} />;
+  const c = React.isValidElement(BaseComponent) ? (
+    BaseComponent
+  ) : (
+    <BaseComponent {...otherProps} />
+  );
   return loading ? (
     <Wrapper loading={loading}>
       {c}
