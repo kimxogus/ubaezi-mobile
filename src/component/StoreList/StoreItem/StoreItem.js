@@ -4,6 +4,8 @@ import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 import { isNil } from 'lodash';
 
+const ITEM_HEIGHT = 110;
+
 const styles = {
   actionIconSize: 17,
 };
@@ -11,7 +13,7 @@ const styles = {
 const StoreItemWrapper = styled.View`
   justify-content: center;
   align-items: stretch;
-  height: 110px;
+  height: ${ITEM_HEIGHT}px;
   margin: 5px;
   border: 1px solid gray;
   border-radius: 10px;
@@ -79,6 +81,8 @@ const timeMessageMap = {
 };
 
 class StoreItem extends PureComponent {
+  static height = ITEM_HEIGHT;
+
   storeStatus = () => {
     const { item: { timeFrom, timeTo } } = this.props;
 

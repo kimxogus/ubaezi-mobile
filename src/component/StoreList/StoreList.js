@@ -34,6 +34,12 @@ export default class StoreList extends PureComponent {
 
   keyExtractor = item => item.id;
 
+  getItemLayout = (data, index) => ({
+    length: StoreItem.height,
+    offset: StoreItem.height * index,
+    index,
+  });
+
   renderItem = ({ item }) => (
     <StoreItem item={item} favorite={!!this.state.favorites[item.id]} />
   );
@@ -51,6 +57,7 @@ export default class StoreList extends PureComponent {
         renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
         extraData={this.state}
+        getItemLayout={this.getItemLayout}
       />
     );
   }

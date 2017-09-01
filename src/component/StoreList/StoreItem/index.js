@@ -1,4 +1,7 @@
 import StoreItem from './StoreItem';
 import StoreItemContainer from './StoreItemContainer';
 
-export default StoreItemContainer(StoreItem);
+const Component = StoreItemContainer(StoreItem);
+Component.height = StoreItem.height;
+
+export default Component;
