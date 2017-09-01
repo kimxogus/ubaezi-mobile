@@ -2259,9 +2259,9 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
-expo@^20.0.4:
-  version "20.0.4"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-20.0.4.tgz#2fac82a7792c732c8274430705035fb7a2b29a08"
+expo@^20.1.1:
+  version "20.1.1"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-20.1.1.tgz#9f2dcf1cc192b661032ed62570165a8421e359f1"
   dependencies:
     "@expo/vector-icons" "^5.0.0"
     babel-preset-expo "^3.0.0"
@@ -5279,7 +5279,13 @@ redux-logger@^2.7.4:
   dependencies:
     deep-diff "0.3.4"
 
-redux-saga@^0.15.6:
+redux-saga-firebase@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/redux-saga-firebase/-/redux-saga-firebase-0.3.0.tgz#1bdefa51996249f4ee8c109b737d0cd07dccee86"
+  dependencies:
+    redux-saga "^0.15.4"
+
+redux-saga@^0.15.4, redux-saga@^0.15.6:
   version "0.15.6"
   resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.15.6.tgz#8638dc522de6c6c0a496fe8b2b5466287ac2dc4d"
 

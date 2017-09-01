@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Linking, Alert } from 'react-native';
 import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 import { isNil } from 'lodash';
@@ -17,7 +17,7 @@ const StoreItemWrapper = styled.View`
   border-radius: 10px;
 `;
 
-const StoreItemButton = styled.TouchableHighlight`
+const StoreItemButton = styled.TouchableOpacity`
   flex: 1;
   justify-content: center;
   align-items: stretch;
@@ -52,7 +52,7 @@ const BottomArea = styled.View`
   background-color: rgba(50, 50, 50, 0.05);
 `;
 
-const Action = styled.TouchableHighlight`
+const Action = styled.TouchableOpacity`
   flex: 1;
   border-color: black;
   border-top-width: 0.5px;
@@ -66,24 +66,54 @@ const Action = styled.TouchableHighlight`
   align-items: center;
 `;
 
+const timeColorMap = {
+  unknown: 'gray',
+  available: 'rgb(50,50,255)',
+  unavailable: '#C0392B',
+};
+
+const timeMessageMap = {
+  unknown: '영업시간 데이터가 없습니다ㅜㅜ',
+  available: '현재 영업중입니다!\n(업체 사정에 따라 달라질 수 있음.)',
+  unavailable: '현재 영업중이 아닙니다ㅜ\n(업체 사정에 따라 달라질 수 있음.)',
+};
+
 class StoreItem extends PureComponent {
-  color = () => {
+  storeStatus = () => {
     const { item: { timeFrom, timeTo } } = this.props;
 
     if (isNil(timeFrom) || isNil(timeTo)) {
-      return 'gray';
+      return 'unknown';
     }
 
     let hour = new Date().getHours();
     if (hour < timeFrom) {
       hour += 24;
     }
-    return hour >= timeFrom && hour < timeTo ? 'rgb(50,50,255)' : '#C0392B';
+    return hour >= timeFrom && hour < timeTo ? 'available' : 'unavailable';
   };
+
+  timeColor = () => timeColorMap[this.storeStatus()];
+
+  onPressCall = async () => {
+    const { item: { call } } = this.props;
+
+    const url = `tel:${call}`;
+    try {
+      const canOpenUrl = await Linking.canOpenURL(url);
+      if (canOpenUrl) {
+        return Linking.openURL(url);
+      }
+    } catch (e) {}
+
+    Alert.alert('오류 발생!', '전화를 거는 중 오류가 발생했습니다..\n잠시후 다시 시도해주세요.');
+  };
+
+  onPressTime = () => Alert.alert('', timeMessageMap[this.storeStatus()]);
 
   render() {
     const { item, favorite } = this.props;
-    const { name, branch, condition, call, timeFrom, timeTo } = item;
+    const { name, branch, condition } = item;
     return (
       <StoreItemWrapper>
         <StoreItemButton>
@@ -101,14 +131,18 @@ class StoreItem extends PureComponent {
           </StoreInfoView>
         </StoreItemButton>
         <BottomArea>
-          <Action>
-            <FontAwesome name="phone" size={styles.actionIconSize} />
+          <Action onPress={this.onPressCall}>
+            <FontAwesome
+              name="phone"
+              size={styles.actionIconSize}
+              color="green"
+            />
           </Action>
-          <Action middle>
+          <Action middle onPress={this.onPressTime}>
             <FontAwesome
               name="clock-o"
               size={styles.actionIconSize}
-              color={this.color()}
+              color={this.timeColor()}
             />
           </Action>
           <Action>

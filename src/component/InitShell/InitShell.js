@@ -3,38 +3,10 @@ import { Linking, Alert } from 'react-native';
 import { AppLoading } from 'expo';
 import VersionCheck from 'react-native-version-check/expo';
 
-import firebase from 'lib/firebase';
 import progressive from 'HOC/progressive';
 
 export default class InitShell extends Component {
-  state = {
-    loading: true,
-  };
-
   async componentDidMount() {
-    // firebase
-    firebase.auth().onAuthStateChanged(user => {
-      const { init, initApp, setUser, setUserData, clearUserData } = this.props;
-      setUser(user);
-      clearUserData();
-      if (user && user.uid) {
-        this.setState({ loading: true });
-        firebase
-          .database()
-          .ref(`/users/${user.uid}`)
-          .once('value', snapshot => {
-            if (snapshot.exists()) {
-              setUserData(snapshot.val());
-            }
-            this.setState({ loading: false });
-          });
-      }
-      if (!init) {
-        this.setState({ loading: false });
-        initApp();
-      }
-    });
-
     // version check
     VersionCheck.needUpdate({ depth: 2 })
       .then(r => {
@@ -62,7 +34,7 @@ export default class InitShell extends Component {
 
   render() {
     const Children = progressive(this.props.children);
-    return !this.props.init && this.state.loading ? (
+    return !this.props.initApp ? (
       <AppLoading />
     ) : (
       <Children {...this.props} {...this.state} />

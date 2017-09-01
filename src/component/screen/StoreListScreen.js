@@ -22,7 +22,7 @@ export default class StoreListScreen extends Component {
 
   processQuery = q => {
     const { category } = this.props;
-    return category ? q : q.equalTo(category, 'category');
+    return category ? q.equalTo(category, 'category') : q;
   };
 
   render() {
