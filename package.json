@@ -46,6 +46,7 @@
     "@expo/vector-icons": "^5.2.0",
     "expo": "^20.0.4",
     "firebase": "^4.3.0",
+    "lodash": "^4.17.4",
     "normalizr": "^3.2.3",
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.12",

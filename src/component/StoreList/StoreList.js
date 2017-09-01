@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { FlatList } from 'react-native';
 import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import styled from 'styled-components/native';
+import { isNil } from 'lodash';
 
 const styles = {
   actionIconSize: 17,
@@ -31,7 +32,8 @@ const StoreInfoView = styled.View`
 const TextRow = styled.View`
   flex: 1;
   flex-direction: row;
-  padding: 6px;
+  padding-top: 6px;
+  padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 0;
   justify-content: space-between;
@@ -47,7 +49,7 @@ const BottomArea = styled.View`
   justify-content: center;
   align-items: stretch;
   height: 40px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(50, 50, 50, 0.05);
 `;
 
 const Action = styled.TouchableHighlight`
@@ -65,6 +67,20 @@ const Action = styled.TouchableHighlight`
 `;
 
 class StoreItem extends PureComponent {
+  color = () => {
+    const { item: { timeFrom, timeTo } } = this.props;
+
+    if (isNil(timeFrom) || isNil(timeTo)) {
+      return 'gray';
+    }
+
+    let hour = new Date().getHours();
+    if (hour < timeFrom) {
+      hour += 24;
+    }
+    return hour >= timeFrom && hour < timeTo ? 'rgb(50,50,255)' : '#C0392B';
+  };
+
   render() {
     const { item, favorite } = this.props;
     const { name, branch, condition, call, timeFrom, timeTo } = item;
@@ -89,13 +105,17 @@ class StoreItem extends PureComponent {
             <FontAwesome name="phone" size={styles.actionIconSize} />
           </Action>
           <Action middle>
-            <FontAwesome name="clock-o" size={styles.actionIconSize} />
+            <FontAwesome
+              name="clock-o"
+              size={styles.actionIconSize}
+              color={this.color()}
+            />
           </Action>
           <Action>
             <FontAwesome
               name={favorite ? 'star' : 'star-o'}
               size={styles.actionIconSize}
-              color="yellow"
+              color="orange"
             />
           </Action>
         </BottomArea>
