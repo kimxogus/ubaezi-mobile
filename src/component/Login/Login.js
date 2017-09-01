@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { google, facebook } from 'lib/login';
+import { google, facebook } from 'action/login';
 
 const styles = {
   iconSize: 60,
