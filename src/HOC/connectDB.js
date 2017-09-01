@@ -11,6 +11,8 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
   const ProgressiveComponent = progressive(BaseComponent);
   class ConnectedComponent extends Component {
     static propTypes = {
+      cache: PropTypes.object,
+      setCache: PropTypes.func,
       cacheFirst: PropTypes.bool,
       path: PropTypes.string.isRequired,
       referencePath: PropTypes.string,
@@ -29,7 +31,7 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
       data: null,
     };
 
-    async componentDidMount() {
+    load = () => {
       const {
         cache,
         path,
@@ -84,10 +86,20 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
           data,
         });
       });
+    };
+
+    async componentDidMount() {
+      this.load();
     }
 
     render() {
-      return <ProgressiveComponent {...this.props} {...this.state} />;
+      return (
+        <ProgressiveComponent
+          {...this.props}
+          {...this.state}
+          load={this.load}
+        />
+      );
     }
   }
 

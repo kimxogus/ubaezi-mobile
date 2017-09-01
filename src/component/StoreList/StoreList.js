@@ -13,11 +13,15 @@ export default class StoreList extends PureComponent {
     data: PropTypes.any,
     favorites: PropTypes.object,
     ListEmptyComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    loading: PropTypes.bool,
+    load: PropTypes.func,
   };
 
   static defaultProps = {
     favorites: {},
     ListEmptyComponent: EmptyList,
+    loading: false,
+    load: () => {},
   };
 
   state = {
@@ -35,10 +39,13 @@ export default class StoreList extends PureComponent {
   );
 
   render() {
-    const { data, ListEmptyComponent } = this.props;
+    const { data, ListEmptyComponent, loading, load } = this.props;
 
     return (
       <FlatList
+        onRefresh={load}
+        refreshing={loading}
+        initialNumToRender={10}
         ListEmptyComponent={ListEmptyComponent}
         data={data}
         renderItem={this.renderItem}
