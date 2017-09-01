@@ -6,8 +6,10 @@ import { denormalize } from 'normalizr';
 
 import firebase from 'lib/firebase';
 import { setCache as setCacheAC } from 'redux/action/cache';
+import progressive from 'HOC/progressive';
 
 export default ({ schema, single = false } = {}) => BaseComponent => {
+  const ProgressiveComponent = progressive(BaseComponent);
   class ConnectedComponent extends Component {
     static propTypes = {
       path: PropTypes.string.isRequired,
@@ -52,7 +54,7 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
     }
 
     render() {
-      return <BaseComponent {...this.props} {...this.state} />;
+      return <ProgressiveComponent {...this.props} {...this.state} />;
     }
   }
 
