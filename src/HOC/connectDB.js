@@ -46,29 +46,27 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
           return this.setState({
             loading: false,
           });
-        let snapshotData = snapshot.val();
+        const snapshotData = snapshot.val();
         if (referencePath) {
-          snapshotData = await Object.keys(
-            snapshotData
-          ).reduce(async (a, b) => {
-            if (
-              cacheFirst &&
-              cache &&
-              cache[schema.key] &&
-              cache[schema.key][b]
-            ) {
-              a[b] = cache[schema.key][b];
-            }
-            if (!a[b]) {
-              a[b] = await new Promise(resolve =>
-                firebase
-                  .database()
-                  .ref(`${referencePath}/${b}`)
-                  .once('value', s => resolve(s.val()))
-              );
-            }
-            return a;
-          }, {});
+          await Promise.all(
+            Object.keys(snapshotData).map(async id => {
+              if (
+                cacheFirst &&
+                cache &&
+                cache[schema.key] &&
+                cache[schema.key][id]
+              ) {
+                snapshotData[id] = cache[schema.key][id];
+              } else {
+                snapshotData[id] = await new Promise(resolve =>
+                  firebase
+                    .database()
+                    .ref(`${referencePath}/${id}`)
+                    .once('value', s => resolve(s.val()))
+                );
+              }
+            })
+          );
         }
         const entities = {
           [schema.key]: snapshotData,

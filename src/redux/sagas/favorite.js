@@ -1,4 +1,4 @@
-import { select, call, takeLatest } from 'redux-saga/effects';
+import { all, select, call, takeLatest } from 'redux-saga/effects';
 
 import rsf from 'lib/sagaFirebase';
 
@@ -10,15 +10,19 @@ const addFavorite = function*({ key, id }) {
   const { uid } = yield select(getUser);
   const time = new Date().getTime();
 
-  yield call(rsf.database.update, `/users/${uid}/favorites/${key}/${id}`, time);
-  yield call(rsf.database.update, `/${key}/${id}/favoriteUsers/${uid}`, time);
+  yield all([
+    call(rsf.database.update, `/users/${uid}/favorites/${key}/${id}`, time),
+    call(rsf.database.update, `/${key}/${id}/favoriteUsers/${uid}`, time),
+  ]);
 };
 
 const removeFavorite = function*({ key, id }) {
   const { uid } = yield select(getUser);
 
-  yield call(rsf.database.update, `/users/${uid}/favorites/${key}/${id}`, null);
-  yield call(rsf.database.update, `/${key}/${id}/favoriteUsers/${uid}`, null);
+  yield all([
+    call(rsf.database.update, `/users/${uid}/favorites/${key}/${id}`, null),
+    call(rsf.database.update, `/${key}/${id}/favoriteUsers/${uid}`, null),
+  ]);
 };
 
 const favoriteSaga = function*() {

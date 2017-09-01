@@ -5,15 +5,11 @@ import StoreItem from './StoreItem';
 
 export default class StoreList extends PureComponent {
   state = {
-    favorites: this.props.favorites,
+    favorites: this.props.favorites || {},
   };
 
   componentWillReceiveProps({ favorites }) {
-    if (favorites && Object.keys(favorites).length) {
-      this.setState(favorites);
-    } else {
-      this.setState({ favorites: {} });
-    }
+    this.setState({ favorites: favorites || {} });
   }
 
   keyExtractor = item => item.id;

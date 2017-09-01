@@ -16,6 +16,10 @@ const FIREBASE_FAIL = 'FIREBASE_FAIL';
 
 const SET_CACHE = 'SET_CACHE';
 
+const LOGIN = 'LOGIN';
+
+const LOGOUT = 'LOGOUT';
+
 export {
   INIT_APP,
   SET_CACHE,
@@ -26,4 +30,6 @@ export {
   REMOVE_FAVORITE,
   FIREBASE_SUCCESS,
   FIREBASE_FAIL,
+  LOGIN,
+  LOGOUT,
 };

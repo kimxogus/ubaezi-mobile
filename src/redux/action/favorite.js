@@ -6,7 +6,7 @@ const addFavorite = ({ key, id }) => ({
   id,
 });
 
-const removeFavorite = (key, id) => ({
+const removeFavorite = ({ key, id }) => ({
   type: REMOVE_FAVORITE,
   key,
   id,
