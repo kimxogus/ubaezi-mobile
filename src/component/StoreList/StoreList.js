@@ -4,18 +4,22 @@ import { FlatList } from 'react-native';
 import StoreItem from './StoreItem';
 
 export default class StoreList extends PureComponent {
-  favorites = {};
+  state = {
+    favorites: this.props.favorites,
+  };
 
   componentWillReceiveProps({ favorites }) {
     if (favorites && Object.keys(favorites).length) {
-      this.favorites = favorites;
+      this.setState(favorites);
+    } else {
+      this.setState({ favorites: {} });
     }
   }
 
   keyExtractor = item => item.id;
 
   renderItem = ({ item }) => (
-    <StoreItem item={item} favorite={!!this.favorites[item.id]} />
+    <StoreItem item={item} favorite={!!this.state.favorites[item.id]} />
   );
 
   render() {
@@ -26,7 +30,7 @@ export default class StoreList extends PureComponent {
         data={data}
         renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
-        extraData={this.favorites}
+        extraData={this.state}
       />
     );
   }
