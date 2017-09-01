@@ -11,12 +11,14 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
   const ProgressiveComponent = progressive(BaseComponent);
   class ConnectedComponent extends Component {
     static propTypes = {
+      cacheFirst: PropTypes.bool,
       path: PropTypes.string.isRequired,
       referencePath: PropTypes.string,
       queryProcessor: PropTypes.func,
     };
 
     static defaultProps = {
+      cacheFirst: false,
       referencePath: null,
       queryProcessor: null,
     };
@@ -27,7 +29,14 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
     };
 
     async componentDidMount() {
-      const { path, queryProcessor, setCache, referencePath } = this.props;
+      const {
+        cache,
+        path,
+        queryProcessor,
+        setCache,
+        referencePath,
+        cacheFirst,
+      } = this.props;
       let query = firebase.database().ref(path);
       if (queryProcessor) {
         query = queryProcessor(query);
@@ -42,12 +51,22 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
           snapshotData = await Object.keys(
             snapshotData
           ).reduce(async (a, b) => {
-            a[b] = await new Promise(resolve =>
-              firebase
-                .database()
-                .ref(`${referencePath}/${b}`)
-                .once('value', s => resolve(s.val()))
-            );
+            if (
+              cacheFirst &&
+              cache &&
+              cache[schema.key] &&
+              cache[schema.key][b]
+            ) {
+              a[b] = cache[schema.key][b];
+            }
+            if (!a[b]) {
+              a[b] = await new Promise(resolve =>
+                firebase
+                  .database()
+                  .ref(`${referencePath}/${b}`)
+                  .once('value', s => resolve(s.val()))
+              );
+            }
             return a;
           }, {});
         }
@@ -72,5 +91,7 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
     }
   }
 
-  return connect(() => ({}), { setCache: setCacheAC })(ConnectedComponent);
+  return connect(({ cache }) => ({ cache }), { setCache: setCacheAC })(
+    ConnectedComponent
+  );
 };
