@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Linking, Alert } from 'react-native';
+import { AppLoading } from 'expo';
 import VersionCheck from 'react-native-version-check/expo';
 
 import firebase from 'lib/firebase';
@@ -7,7 +8,7 @@ import progressive from 'HOC/progressive';
 
 export default class InitShell extends Component {
   state = {
-    loading: false,
+    loading: true,
   };
 
   async componentDidMount() {
@@ -28,7 +29,10 @@ export default class InitShell extends Component {
             this.setState({ loading: false });
           });
       }
-      if (!init) initApp();
+      if (!init) {
+        this.setState({ loading: false });
+        initApp();
+      }
     });
 
     // version check
@@ -58,6 +62,10 @@ export default class InitShell extends Component {
 
   render() {
     const Children = progressive(this.props.children);
-    return <Children {...this.props} {...this.state} />;
+    return !this.props.init && this.state.loading ? (
+      <AppLoading />
+    ) : (
+      <Children {...this.props} {...this.state} />
+    );
   }
 }
