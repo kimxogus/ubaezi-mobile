@@ -28,7 +28,11 @@ export default class StoreListScreen extends Component {
   render() {
     return (
       <Container>
-        <StoreList path="/stores" queryProcessor={this.processQuery} />
+        <StoreList
+          path="/stores"
+          queryProcessor={this.processQuery}
+          defaultValue={{}}
+        />
       </Container>
     );
   }

@@ -15,6 +15,7 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
       path: PropTypes.string.isRequired,
       referencePath: PropTypes.string,
       queryProcessor: PropTypes.func,
+      defaultValue: PropTypes.any,
     };
 
     static defaultProps = {
@@ -36,17 +37,18 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
         setCache,
         referencePath,
         cacheFirst,
+        defaultValue,
       } = this.props;
       let query = firebase.database().ref(path);
       if (queryProcessor) {
         query = queryProcessor(query);
       }
       query.on('value', async snapshot => {
-        if (!snapshot.exists())
+        const snapshotData = snapshot.val() || defaultValue;
+        if (!snapshotData)
           return this.setState({
             loading: false,
           });
-        const snapshotData = snapshot.val();
         if (referencePath) {
           await Promise.all(
             Object.keys(snapshotData).map(async id => {

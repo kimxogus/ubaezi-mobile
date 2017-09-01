@@ -32,6 +32,7 @@ export default class FavoriteScreen extends Component {
         {user && user.uid ? (
           <StoreList
             cacheFirst
+            defaultValue={{}}
             referencePath={`/stores`}
             path={`/users/${user.uid}/favorites/stores`}
             queryProcessor={this.processQuery}

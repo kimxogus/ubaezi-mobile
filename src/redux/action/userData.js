@@ -9,4 +9,4 @@ const clearUserData = () => ({
   type: CLEAR_USER_DATA,
 });
 
-export { setUser, setUserData, clearUserData };
+export { setUserData, clearUserData };
