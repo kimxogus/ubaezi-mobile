@@ -20,7 +20,7 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
 
     state = {
       loading: true,
-      data: void 0,
+      data: null,
     };
 
     async componentDidMount() {
@@ -31,6 +31,10 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
       }
       query.on('value', snapshot => {
         const snapshotData = snapshot.val();
+        if (!snapshotData)
+          return this.setState({
+            loading: false,
+          });
         const entities = {
           [schema.key]: snapshotData,
         };

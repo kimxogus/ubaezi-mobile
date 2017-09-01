@@ -7,26 +7,27 @@ import facebookCredentials from 'credential/facebook.json';
 
 const google = async () => {
   try {
-    const { type, accessToken } = await Google.logInAsync({
-      behavior: 'native',
+    const result = await Google.logInAsync({
+      behavior: 'web',
       androidClientId: googleCredentials.androidClientId,
       iosClientId: googleCredentials.iosClientId,
-      androidStandaloneAppClientId: googleCredentials.androidClientId,
+      androidStandaloneAppClientId:
+        googleCredentials.androidStandaloneAppClientId,
       iosStandaloneAppClientId: googleCredentials.iosClientId,
       scopes: ['profile', 'email'],
     });
 
+    const { type, idToken } = result;
+
     if (type === 'success') {
-      const credential = firebase.auth.GoogleAuthProvider.credential(
-        accessToken
-      );
+      const credential = firebase.auth.GoogleAuthProvider.credential(idToken);
 
       await firebase.auth().signInWithCredential(credential);
     } else {
       throw new Error();
     }
   } catch (e) {
-    throw new Error('Login Failed');
+    throw e;
   }
 };
 
@@ -50,7 +51,7 @@ const facebook = async () => {
       throw new Error();
     }
   } catch (e) {
-    throw new Error('Login Failed');
+    throw e;
   }
 };
 

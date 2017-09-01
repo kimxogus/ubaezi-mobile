@@ -22,7 +22,7 @@ export default class FavoriteScreen extends Component {
   };
 
   processQuery(q) {
-    return q.orderByChild('sortOrder').limitToFirst(10);
+    return q.limitToFirst(10);
   }
 
   render() {
