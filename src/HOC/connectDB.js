@@ -30,11 +30,11 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
         query = queryProcessor(query);
       }
       query.on('value', snapshot => {
-        const snapshotData = snapshot.val();
-        if (!snapshotData)
+        if (!snapshot.exists())
           return this.setState({
             loading: false,
           });
+        const snapshotData = snapshot.val();
         const entities = {
           [schema.key]: snapshotData,
         };
