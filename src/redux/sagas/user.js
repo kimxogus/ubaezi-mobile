@@ -20,7 +20,8 @@ const syncUser = function*() {
       yield put(setUser(user));
       const userDataChannel = yield call(
         rsf.database.channel,
-        `/users/${user.uid}`
+        `/users/${user.uid}`,
+        'value'
       );
       while (true) {
         const { value: userData } = yield take(userDataChannel);
