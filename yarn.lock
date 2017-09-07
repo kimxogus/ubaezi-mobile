@@ -2115,9 +2115,9 @@ eslint-scope@^3.7.1:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.6.0.tgz#98ced4a706a87abbe63207895d0023a38e250bbe"
+eslint@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.6.1.tgz#ddc7fc7fd70bf93205b0b3449bb16a1e9e7d4950"
   dependencies:
     ajv "^5.2.0"
     babel-code-frame "^6.22.0"
@@ -2239,9 +2239,9 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
-expo@^20.1.2:
-  version "20.1.2"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-20.1.2.tgz#bac5723693bdfdd30aa003df7b05d06ee5459d5f"
+expo@^20.1.3:
+  version "20.1.3"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-20.1.3.tgz#6a4334971bf7216a02c93aa6a5dcfb99174c48bd"
   dependencies:
     "@expo/vector-icons" "^5.0.0"
     babel-preset-expo "^3.0.0"
@@ -5085,9 +5085,9 @@ react-native-version-check@^2.0.0-alpha.9:
     lodash.isnil "^4.0.0"
     lodash.pick "^4.4.0"
 
-react-native@^0.48.0:
-  version "0.48.0"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.48.0.tgz#b2f06ee969c3145a0ad19700fb5ee90125bc0d25"
+react-native@^0.48.1:
+  version "0.48.1"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.48.1.tgz#052ba5a86d3bdb748c288124248727d02b1c0939"
   dependencies:
     absolute-path "^0.0.0"
     art "^0.10.0"
@@ -5299,9 +5299,9 @@ redux-logger@^2.7.4:
   dependencies:
     deep-diff "0.3.4"
 
-redux-saga-firebase@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/redux-saga-firebase/-/redux-saga-firebase-0.3.0.tgz#1bdefa51996249f4ee8c109b737d0cd07dccee86"
+redux-saga-firebase@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/redux-saga-firebase/-/redux-saga-firebase-0.4.2.tgz#56e168cf7f948cd66ea943b01bdbaec3e72f007e"
   dependencies:
     redux-saga "^0.15.4"
 
@@ -5727,9 +5727,9 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
-simple-git@^1.76.0:
-  version "1.76.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-1.76.0.tgz#bfa9287559d30fb60bbef5a370e0a3f3895c8fee"
+simple-git@^1.77.0:
+  version "1.77.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-1.77.0.tgz#526537470b946e5f6f93d103ef54b46949600939"
   dependencies:
     debug "^2.6.7"
 
