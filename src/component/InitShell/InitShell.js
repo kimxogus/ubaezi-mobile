@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Linking, Alert } from 'react-native';
 import { AppLoading } from 'expo';
-import VersionCheck from 'react-native-version-check-expo';
+import VersionCheck from 'react-native-version-check/expo';
 
 import progressive from 'HOC/progressive';
 
