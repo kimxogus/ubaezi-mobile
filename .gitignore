@@ -6,4 +6,4 @@ yarn-error.log*
 .vscode
 src/credential/*
 !src/credential/.empty
-app.json.bak
+app.json

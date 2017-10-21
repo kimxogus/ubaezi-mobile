@@ -1,6 +1,6 @@
 {
   "expo": {
-    "sdkVersion": "20.0.0",
+    "sdkVersion": "22.0.0",
     "name": "유배지",
     "slug": "ubaezi",
     "privacy": "unlisted",
@@ -8,25 +8,25 @@
     "scheme": "ubeazi",
     "android": {
       "package": "io.xogus.ubaezi",
-      "versionCode": "${buildNumberInteger}",
+      "versionCode": 400,
       "config": {
         "fabric": {},
         "googleSignIn": {
-          "apiKey": "${androidGoogleApiKey}",
-          "certificateHash": "${androidGoogleCertificateHash}"
+          "apiKey": "AIzaSyD6QNm-_VEMFx_s8hp91ISctAuUc08hOgY",
+          "certificateHash": "BC:93:F3:9D:AE:1A:BD:7A:2C:0F:2B:D7:D6:43:B1:EA:EA:2E:84:4F"
         }
       }
     },
     "ios": {
       "bundleIdentifier": "io.xogus.ubaezi",
-      "buildNumber": "${buildNumber}",
+      "buildNumber": "400",
       "config": {
         "googleSignIn": {
-          "reservedClientId": "${iosReservedClientId}"
+          "reservedClientId": "com.googleusercontent.apps.382214867786-tm4t8afaqcli04ebo4eb6opkmc5ivf5j"
         }
       }
     },
-    "facebookScheme": "${facebookScheme}",
+    "facebookScheme": "fb716053745256712",
     "hooks": {
       "postPublish": [
         {
@@ -34,7 +34,7 @@
           "config": {
             "organization": "ubaezi",
             "project": "ubaezi-react-native",
-            "authToken": "${sentryAuthToken}"
+            "authToken": "21aba6d155474c1e8a419636930b608bc608785dbc09459a8e402514a053c331"
           }
         }
       ]
