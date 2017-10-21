@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import { Alert, View } from 'react-native';
 import styled from 'styled-components/native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  Button,
+  FormInput,
+  FormLabel,
+  FormValidationMessage,
+} from 'react-native-elements';
 
-import { google, facebook } from 'action/login';
-
-const styles = {
-  iconSize: 60,
-};
+import { createUser, login } from 'action/auth';
 
 const Container = styled.View`
   display: flex;
@@ -16,56 +17,153 @@ const Container = styled.View`
   justify-content: center;
 `;
 
-const Button = styled.TouchableHighlight`
+const ContentWrapper = styled.View`
   display: flex;
-  flex: 1;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 10px;
-  border-radius: 30px;
-  background-color: skyblue;
 `;
 
-const ContentWrapper = styled.View`
+const ButtonBox = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 `;
 
-const Content = styled.Text`
-  text-align: center;
-  font-size: 45px;
-`;
+const Blank = styled.View`height: 15;`;
+
+const style = {
+  button: {
+    height: 40,
+  },
+};
+
+const icon = {
+  login: { name: 'check' },
+  register: { name: 'account-circle' },
+  back: { name: 'arrow-back' },
+};
 
 export default class Login extends Component {
-  googleLogin = () =>
-    google().catch(() => Alert.alert('', '로그인이 실패하였습니다.\n잠시후에 다시 시도해주세요ㅜㅜ'));
+  state = {
+    isRegistering: false,
+    email: null,
+    password: null,
+    passwordCheck: null,
+  };
 
-  facebookLogin = () =>
-    facebook().catch(() => Alert.alert('', '로그인이 실패하였습니다.\n잠시후에 다시 시도해주세요ㅜㅜ'));
+  switch = () =>
+    this.setState(({ isRegistering }) => ({
+      isRegistering: !isRegistering,
+    }));
+
+  login = async () => {
+    const { email, password } = this.state;
+    try {
+      await login(email, password);
+    } catch (e) {
+      Alert.alert('', e.message);
+    }
+  };
+
+  register = async () => {
+    const { email, password, passwordCheck } = this.state;
+    if (password && password.length >= 5 && password === passwordCheck) {
+      try {
+        await createUser(email, password);
+        Alert.alert(
+          '가입 완료!',
+          [
+            '유배지에 가입하신 것을 환영합니다.',
+            '가입한 메일의 이메일 인증을 꼭 진행해주세요.',
+            '받은 편지함을 확인해보세요!',
+            '- 인증되지 않은 메일은 즐겨찾기, 제안을 사용할 수 없습니다.',
+          ].join('\n')
+        );
+      } catch (e) {
+        Alert.alert('', e.message);
+      }
+    } else {
+      Alert.alert('', '비밀번호를 다시 확인해주세요');
+    }
+  };
+
+  onChangeEmail = email => this.setState({ email });
+
+  onChangePassword = password => this.setState({ password });
+
+  onChangePasswordCheck = passwordCheck => this.setState({ passwordCheck });
 
   render() {
+    const { isRegistering, password } = this.state;
     return (
       <Container>
-        <Button onPress={this.googleLogin}>
-          <ContentWrapper>
-            <Content>
-              <MaterialCommunityIcons name="google" size={styles.iconSize} />
-            </Content>
-            <Content> </Content>
-            <Content>구글 로그인</Content>
-          </ContentWrapper>
-        </Button>
-        <Button onPress={this.facebookLogin}>
-          <ContentWrapper>
-            <Content>
-              <MaterialCommunityIcons name="facebook" size={styles.iconSize} />
-            </Content>
-            <Content> </Content>
-            <Content>페이스북 로그인</Content>
-          </ContentWrapper>
-        </Button>
+        <ContentWrapper>
+          <View>
+            <FormLabel>UNIST E-mail (@unist.ac.kr)</FormLabel>
+            <FormInput
+              onChangeText={this.onChangeEmail}
+              keyboardType="email-address"
+            />
+          </View>
+          <View>
+            <FormLabel>Password</FormLabel>
+            <FormInput onChangeText={this.onChangePassword} secureTextEntry />
+            {password && password.length >= 5 ? null : (
+              <FormValidationMessage>5자리 이상 입력해주세요.</FormValidationMessage>
+            )}
+          </View>
+          {isRegistering ? (
+            <View>
+              <FormLabel>Password Check</FormLabel>
+              <FormInput
+                onChangeText={this.onChangePasswordCheck}
+                secureTextEntry
+              />
+            </View>
+          ) : null}
+          <Blank />
+          {isRegistering ? (
+            <ButtonBox>
+              <Button
+                buttonStyle={style.button}
+                onPress={this.switch}
+                title="BACK"
+                large
+                raised
+                icon={icon.back}
+              />
+              <Button
+                buttonStyle={style.button}
+                onPress={this.register}
+                title="REGISTER"
+                large
+                raised
+                icon={icon.register}
+              />
+            </ButtonBox>
+          ) : (
+            <ButtonBox>
+              <Button
+                buttonStyle={style.button}
+                onPress={this.login}
+                title="LOGIN"
+                large
+                raised
+                icon={icon.login}
+              />
+              <Button
+                buttonStyle={style.button}
+                onPress={this.switch}
+                title="REGISTER"
+                large
+                raised
+                icon={icon.register}
+              />
+            </ButtonBox>
+          )}
+        </ContentWrapper>
       </Container>
     );
   }

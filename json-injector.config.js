@@ -16,9 +16,7 @@ module.exports = {
         .readJSONSync(path.resolve(__dirname, 'package.json'))
         .version.split('.')
         .map((n, i) => ({ n, i }))
-        .reduce((a, { n, i }) => {
-          return a + Math.pow(100, 2 - i) * n;
-        }, 0),
+        .reduce((a, { n, i }) => a + Math.pow(100, 2 - i) * n, 0),
     }),
   ],
 };

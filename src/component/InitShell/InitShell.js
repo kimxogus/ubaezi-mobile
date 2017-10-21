@@ -8,9 +8,10 @@ import progressive from 'HOC/progressive';
 export default class InitShell extends Component {
   async componentDidMount() {
     // version check
-    VersionCheck.needUpdate({ depth: 2 })
+    VersionCheck.needUpdate()
       .then(r => {
-        if (r.isNeeded) {
+        const { isNeeded } = r;
+        if (isNeeded) {
           // update needed!
           Alert.alert('업데이트 안내', '유배지 업데이트가 출시되었습니다.\n업데이트하러 가시겠습니까?', [
             {

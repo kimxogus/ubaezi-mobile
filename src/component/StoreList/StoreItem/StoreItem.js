@@ -133,7 +133,7 @@ class StoreItem extends PureComponent {
         <StoreItemButton>
           <StoreInfoView>
             <TextRow>
-              <Text size={27} weight={'bold'}>
+              <Text size={23} weight={'bold'}>
                 {name}
               </Text>
               <MaterialCommunityIcons name="chevron-right" size={20} />
