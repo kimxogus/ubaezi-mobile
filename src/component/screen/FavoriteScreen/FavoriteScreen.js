@@ -22,7 +22,9 @@ const VerifyMessage = styled.Text`
   line-height: 25px;
 `;
 
-const Blank = styled.View`height: 25px;`;
+const Blank = styled.View`
+  height: 25px;
+`;
 
 export default class FavoriteScreen extends Component {
   static navigationOptions = {
@@ -43,34 +45,36 @@ export default class FavoriteScreen extends Component {
     const { user } = this.props;
     return (
       <Container>
-        {user && user.uid ? user.emailVerified ? (
-          <StoreList
-            cacheFirst
-            defaultValue={{}}
-            referencePath={`/stores`}
-            path={`/users/${user.uid}/favorites/stores`}
-            queryProcessor={this.processQuery}
-          />
-        ) : (
-          [
-            <VerifyMessage key="verify-message">
-              {[
-                '즐겨찾기, 제안 기능은 인증한',
-                '사용자에게만 열립니다!.',
-                '',
-                '- 인증 방법 -',
-                '1. 유니스트 메일',
-                '2. 받은편지함(혹은 정크메일) 확인',
-                '3. 유배지 인증 메일의 링크 클릭!',
-              ].join('\n')}
-            </VerifyMessage>,
-            <Blank key="blank" />,
-            <Button
-              title="유니스트 메일로 가기"
-              key="button_unist_mail"
-              onPress={this.linkUnistMail}
-            />,
-          ]
+        {user && user.uid ? (
+          user.emailVerified ? (
+            <StoreList
+              cacheFirst
+              defaultValue={{}}
+              referencePath={`/stores`}
+              path={`/users/${user.uid}/favorites/stores`}
+              queryProcessor={this.processQuery}
+            />
+          ) : (
+            [
+              <VerifyMessage key="verify-message">
+                {[
+                  '즐겨찾기, 제안 기능은 인증한',
+                  '사용자에게만 열립니다!.',
+                  '',
+                  '- 인증 방법 -',
+                  '1. 유니스트 메일',
+                  '2. 받은편지함(혹은 정크메일) 확인',
+                  '3. 유배지 인증 메일의 링크 클릭!',
+                ].join('\n')}
+              </VerifyMessage>,
+              <Blank key="blank" />,
+              <Button
+                title="유니스트 메일로 가기"
+                key="button_unist_mail"
+                onPress={this.linkUnistMail}
+              />,
+            ]
+          )
         ) : (
           <Login />
         )}

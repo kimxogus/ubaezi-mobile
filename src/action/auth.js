@@ -1,4 +1,8 @@
+import { bindActionCreators } from 'redux';
+
 import firebase from 'lib/firebase';
+import store from 'redux/store';
+import { setUser as setUserAC } from 'redux/action/user';
 
 const emailRegExp = /@unist.ac.kr\s*$/;
 
@@ -19,4 +23,5 @@ export const login = async (email, password) => {
 
 export const logout = async () => {
   await firebase.auth().signOut();
+  bindActionCreators(setUserAC, store.dispatch)(null);
 };
