@@ -1,3 +1,4 @@
+// @flow
 import { bindActionCreators } from 'redux';
 
 import firebase from 'lib/firebase';
@@ -6,7 +7,7 @@ import { setUser as setUserAC } from 'redux/action/user';
 
 const emailRegExp = /@unist.ac.kr\s*$/;
 
-export const createUser = async (email, password) => {
+export const createUser = async (email: string, password: string) => {
   if (!emailRegExp.test(email)) {
     throw new Error('@unist.ac.kr 이메일만 사용 가능합니다.');
   }
@@ -17,7 +18,7 @@ export const createUser = async (email, password) => {
   await firebase.auth().currentUser.sendEmailVerification();
 };
 
-export const login = async (email, password) => {
+export const login = async (email: string, password: string) => {
   await firebase.auth().signInWithEmailAndPassword(email, password);
 };
 

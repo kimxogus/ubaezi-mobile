@@ -12,6 +12,7 @@
     "eslint-config-react-native-prettier": "^1.0.1",
     "eslint-plugin-prettier": "^2.2.0",
     "eslint-plugin-react": "^7.3.0",
+    "flow-bin": "^0.57.3",
     "fs-extra": "^4.0.1",
     "inject-env": "^0.7.3",
     "jest-expo": "~22.0.0",
@@ -30,7 +31,8 @@
     "android": "dotenv -e .env react-native-scripts android",
     "ios": "dotenv -e .env react-native-scripts ios",
     "lint": "dotenv -e .env eslint .",
-    "test": "dotenv -e .env jest --watch"
+    "test": "dotenv -e .env jest --watch",
+    "flow": "dotenv -e .env flow"
   },
   "jest": {
     "preset": "jest-expo",
