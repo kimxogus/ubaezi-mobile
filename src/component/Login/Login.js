@@ -31,7 +31,9 @@ const ButtonBox = styled.View`
   justify-content: center;
 `;
 
-const Blank = styled.View`height: 15;`;
+const Blank = styled.View`
+  height: 15;
+`;
 
 const style = {
   button: {
