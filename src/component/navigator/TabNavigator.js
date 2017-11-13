@@ -3,7 +3,7 @@ import { TabNavigator } from 'react-navigation';
 import { theme } from 'styles/theme';
 
 import FavoriteScreen from 'component/Screen/FavoriteScreen';
-import StoreListScreen from 'component/Screen/StoreListScreen';
+import StoreScreen from 'component/Screen/StoreScreen';
 import SettingsScreen from 'component/Screen/SettingsScreen';
 
 const initialRouteName = 'Favorite';
@@ -13,8 +13,8 @@ const AppNavigator = TabNavigator(
     Favorite: {
       screen: FavoriteScreen,
     },
-    StoreList: {
-      screen: StoreListScreen,
+    Store: {
+      screen: StoreScreen,
     },
     Settings: {
       screen: SettingsScreen,
