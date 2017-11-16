@@ -1,3 +1,4 @@
+// @flow
 import { StackNavigator } from 'react-navigation';
 import { Constants } from 'expo';
 
@@ -15,6 +16,7 @@ const AppNavigator = StackNavigator(
     initialRouteName,
     navigationOptions: {
       headerStyle: {
+        height: 0,
         marginTop: Constants.statusBarHeight,
       },
     },

@@ -1,8 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Linking, Alert } from 'react-native';
 import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 import { isNil } from 'lodash';
+import { withNavigation, NavigationActions } from 'react-navigation';
 
 const ITEM_HEIGHT = 110;
 
@@ -74,30 +75,53 @@ const timeColorMap = {
   unavailable: '#C0392B',
 };
 
-const timeMessageMap = {
-  unknown: '영업시간 데이터가 없습니다ㅜㅜ',
-  available: '현재 영업중입니다!\n(업체 사정에 따라 달라질 수 있음.)',
-  unavailable: '현재 영업중이 아닙니다ㅜ\n(업체 사정에 따라 달라질 수 있음.)',
+const timeStatusMap = {
+  UNKNOWN: 'unknown',
+  AVAILABLE: 'available',
+  UNAVAILABLE: 'unavailable',
 };
 
-class StoreItem extends PureComponent {
+const timeMessageMap = {
+  [timeStatusMap.UNKNOWN]: '영업시간 데이터가 없습니다ㅜㅜ',
+  [timeStatusMap.AVAILABLE]: '현재 영업중입니다!\n(업체 사정에 따라 달라질 수 있음.)',
+  [timeStatusMap.UNAVAILABLE]: '현재 영업중이 아닙니다ㅜ\n(업체 사정에 따라 달라질 수 있음.)',
+};
+
+class StoreItem extends Component {
   static height = ITEM_HEIGHT;
 
   storeStatus = () => {
     const { item: { timeFrom, timeTo } } = this.props;
 
     if (isNil(timeFrom) || isNil(timeTo)) {
-      return 'unknown';
+      return timeStatusMap.UNKNOWN;
     }
 
     let hour = new Date().getHours();
     if (hour < timeFrom) {
       hour += 24;
     }
-    return hour >= timeFrom && hour < timeTo ? 'available' : 'unavailable';
+    return hour >= timeFrom && hour < timeTo
+      ? timeStatusMap.AVAILABLE
+      : timeStatusMap.UNAVAILABLE;
   };
 
   timeColor = () => timeColorMap[this.storeStatus()];
+
+  onPressStore = () => {
+    const { item: { id }, navigation: { dispatch, state } } = this.props;
+    const action = NavigationActions.navigate({
+      routeName: 'Home',
+      action: NavigationActions.navigate({
+        routeName: 'Store',
+        action: NavigationActions.navigate({
+          routeName: 'StoreDetail',
+          params: { id },
+        }),
+      }),
+    });
+    dispatch(action);
+  };
 
   onPressCall = async () => {
     const { item: { call } } = this.props;
@@ -110,7 +134,7 @@ class StoreItem extends PureComponent {
       }
     } catch (e) {}
 
-    Alert.alert('오류 발생!', '전화를 거는 중 오류가 발생했습니다..\n잠시후 다시 시도해주세요.');
+    Alert.alert('오류 발생!', '전화를 거는 중 오류가 발생했습니다.\n잠시후 다시 시도해주세요.');
   };
 
   onPressTime = () => Alert.alert('', timeMessageMap[this.storeStatus()]);
@@ -130,7 +154,7 @@ class StoreItem extends PureComponent {
     const { name, branch, condition } = item;
     return (
       <StoreItemWrapper>
-        <StoreItemButton>
+        <StoreItemButton onPress={this.onPressStore}>
           <StoreInfoView>
             <TextRow>
               <Text size={23} weight={'bold'}>
@@ -172,4 +196,4 @@ class StoreItem extends PureComponent {
   }
 }
 
-export default StoreItem;
+export default withNavigation(StoreItem);

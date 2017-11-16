@@ -1,39 +1,14 @@
-import React, { Component } from 'react';
-import styled from 'styled-components/native';
+import React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { sizes } from 'styles';
 
-import StoreList from 'component/StoreList';
+import StoreNavigator from 'component/Navigator/StoreNavigator';
 
-const Container = styled.View`
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: stretch;
-`;
+StoreNavigator.navigationOptions = {
+  tabBarIcon: ({ tintColor }) => (
+    <FontAwesome name="list" size={sizes.icon} color={tintColor} />
+  ),
+};
 
-export default class StoreListScreen extends Component {
-  static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
-      <FontAwesome name="list" size={sizes.icon} color={tintColor} />
-    ),
-  };
-
-  processQuery = q => {
-    const { category } = this.props;
-    return category ? q.equalTo(category, 'category') : q;
-  };
-
-  render() {
-    return (
-      <Container>
-        <StoreList
-          path="/stores"
-          queryProcessor={this.processQuery}
-          defaultValue={{}}
-        />
-      </Container>
-    );
-  }
-}
+export default StoreNavigator;
