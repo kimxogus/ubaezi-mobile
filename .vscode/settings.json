@@ -1,0 +1,10 @@
+{
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  "eslint.autoFixOnSave": true,
+  "editor.formatOnSave": true,
+  "javascript.validate.enable": false,
+  "cSpell.words": [
+    "unist"
+  ]
+}

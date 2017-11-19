@@ -3,7 +3,8 @@ node_modules/
 npm-debug.*
 .DS_Store
 yarn-error.log*
-.vscode
+.vscode/*
+.vscode/settings.json
 src/credential/*
 !src/credential/.empty
 app.json
