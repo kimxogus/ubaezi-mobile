@@ -58,6 +58,8 @@ export default ({ schema } = {}) => BaseComponent => {
       }
       query.on('value', async snapshot => {
         const snapshotData = snapshot.val() || defaultValue;
+        console.log(path);
+        if (path === 'menuGroups') console.log(snapshot.val());
         if (!snapshotData) {
           this.setState({
             loading: false,
@@ -93,6 +95,8 @@ export default ({ schema } = {}) => BaseComponent => {
         const data = id
           ? snapshotData
           : denormalize(Object.keys(snapshotData), [schema], entities);
+        console.log(path);
+        if (path.startsWith('/menuGroups')) console.log(path, data);
         setCache(entities);
         this.setState({
           loading: false,

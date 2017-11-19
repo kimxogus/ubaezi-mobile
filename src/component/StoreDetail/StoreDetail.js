@@ -1,8 +1,9 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { List, ListItem } from 'react-native-elements';
+
+import MenuGroups from './MenuGroups';
 
 const keys = ['name', 'branch', 'call', 'address'].map(k => ({
   name: k,
@@ -25,7 +26,7 @@ export default class StoreDetail extends PureComponent {
     const { loading, data } = this.props;
     if (loading || !data) return null;
 
-    const {} = this.props;
+    const { id } = data;
 
     return [
       <List key="info">
@@ -33,6 +34,7 @@ export default class StoreDetail extends PureComponent {
           <ListItem key={`${name}`} title={data[name]} onPress={action} />
         ))}
       </List>,
+      <MenuGroups key="menuGroup" storeId={id} />,
     ];
   }
 }
