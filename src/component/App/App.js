@@ -48,9 +48,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ nav }) => ({ nav });
-
-const AppWithNavigationState = connect(mapStateToProps)(App);
+const AppWithNavigationState = connect(({ nav }) => ({ nav }))(App);
 
 export default class Root extends Component {
   render() {

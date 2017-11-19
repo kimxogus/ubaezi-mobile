@@ -83,8 +83,10 @@ const timeStatusMap = {
 
 const timeMessageMap = {
   [timeStatusMap.UNKNOWN]: '영업시간 데이터가 없습니다ㅜㅜ',
-  [timeStatusMap.AVAILABLE]: '현재 영업중입니다!\n(업체 사정에 따라 달라질 수 있음.)',
-  [timeStatusMap.UNAVAILABLE]: '현재 영업중이 아닙니다ㅜ\n(업체 사정에 따라 달라질 수 있음.)',
+  [timeStatusMap.AVAILABLE]:
+    '현재 영업중입니다!\n(업체 사정에 따라 달라질 수 있음.)',
+  [timeStatusMap.UNAVAILABLE]:
+    '현재 영업중이 아닙니다ㅜ\n(업체 사정에 따라 달라질 수 있음.)',
 };
 
 class StoreItem extends Component {
@@ -109,15 +111,12 @@ class StoreItem extends Component {
   timeColor = () => timeColorMap[this.storeStatus()];
 
   onPressStore = () => {
-    const { item: { id }, navigation: { dispatch, state } } = this.props;
+    const { item: { id }, navigation: { dispatch } } = this.props;
     const action = NavigationActions.navigate({
-      routeName: 'Home',
+      routeName: 'Store',
       action: NavigationActions.navigate({
-        routeName: 'Store',
-        action: NavigationActions.navigate({
-          routeName: 'StoreDetail',
-          params: { id },
-        }),
+        routeName: 'StoreDetail',
+        params: { id },
       }),
     });
     dispatch(action);
@@ -134,7 +133,10 @@ class StoreItem extends Component {
       }
     } catch (e) {}
 
-    Alert.alert('오류 발생!', '전화를 거는 중 오류가 발생했습니다.\n잠시후 다시 시도해주세요.');
+    Alert.alert(
+      '오류 발생!',
+      '전화를 거는 중 오류가 발생했습니다.\n잠시후 다시 시도해주세요.'
+    );
   };
 
   onPressTime = () => Alert.alert('', timeMessageMap[this.storeStatus()]);
