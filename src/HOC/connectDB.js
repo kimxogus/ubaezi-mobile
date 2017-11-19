@@ -7,7 +7,7 @@ import firebase from 'lib/firebase';
 import { setCache as setCacheAC } from 'redux/action/cache';
 import progressive from 'HOC/progressive';
 
-export default ({ schema, single = false } = {}) => BaseComponent => {
+export default ({ schema } = {}) => BaseComponent => {
   const ProgressiveComponent = progressive(BaseComponent);
   class ConnectedComponent extends Component {
     static propTypes = {
@@ -15,12 +15,14 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
       setCache: PropTypes.func,
       cacheFirst: PropTypes.bool,
       path: PropTypes.string.isRequired,
+      id: PropTypes.string,
       referencePath: PropTypes.string,
       queryProcessor: PropTypes.func,
       defaultValue: PropTypes.any,
     };
 
     static defaultProps = {
+      id: null,
       cacheFirst: false,
       referencePath: null,
       queryProcessor: null,
@@ -34,52 +36,63 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
     load = () => {
       const {
         cache,
-        path,
+        path: p,
+        id,
         queryProcessor,
         setCache,
         referencePath,
         cacheFirst,
         defaultValue,
       } = this.props;
+      if (cacheFirst && cache && cache[schema.key] && cache[schema.key][id]) {
+        this.setState({
+          loading: false,
+          data: cache[schema.key][id],
+        });
+        return;
+      }
+      const path = id ? `${p}/${id}` : p;
       let query = firebase.database().ref(path);
       if (queryProcessor) {
         query = queryProcessor(query);
       }
       query.on('value', async snapshot => {
         const snapshotData = snapshot.val() || defaultValue;
-        if (!snapshotData)
-          return this.setState({
+        if (!snapshotData) {
+          this.setState({
             loading: false,
           });
+          return;
+        }
         if (referencePath) {
           await Promise.all(
-            Object.keys(snapshotData).map(async id => {
+            Object.keys(snapshotData).map(async entityID => {
               if (
                 cacheFirst &&
                 cache &&
                 cache[schema.key] &&
-                cache[schema.key][id]
+                cache[schema.key][entityID]
               ) {
-                snapshotData[id] = cache[schema.key][id];
+                snapshotData[entityID] = cache[schema.key][entityID];
               } else {
-                snapshotData[id] = await new Promise(resolve =>
+                snapshotData[entityID] = await new Promise(resolve =>
                   firebase
                     .database()
-                    .ref(`${referencePath}/${id}`)
+                    .ref(`${referencePath}/${entityID}`)
                     .once('value', s => resolve(s.val()))
                 );
               }
             })
           );
         }
-        const entities = {
-          [schema.key]: snapshotData,
-        };
-        const data = denormalize(
-          Object.keys(snapshotData),
-          single ? schema : [schema],
-          entities
-        );
+        const entities = id
+          ? {
+              [schema.key]: { [id]: snapshotData },
+            }
+          : { [schema.key]: snapshotData };
+        const data = id
+          ? snapshotData
+          : denormalize(Object.keys(snapshotData), [schema], entities);
         setCache(entities);
         this.setState({
           loading: false,
@@ -88,7 +101,7 @@ export default ({ schema, single = false } = {}) => BaseComponent => {
       });
     };
 
-    async componentDidMount() {
+    componentDidMount() {
       this.load();
     }
 

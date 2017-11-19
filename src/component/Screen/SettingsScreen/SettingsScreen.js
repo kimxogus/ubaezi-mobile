@@ -7,13 +7,6 @@ import { sizes } from 'styles';
 
 import { logout } from 'action/auth';
 
-const Container = styled.View`
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
-
 const T = styled.Text`
   flex: 1;
 `;

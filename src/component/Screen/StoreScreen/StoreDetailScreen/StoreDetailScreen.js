@@ -15,7 +15,7 @@ export default class StoreDetailScreen extends Component {
     const { navigation: { state: { params: { id } = {} } = {} } } = this.props;
     return (
       <Container>
-        <StoreDetail path={`stores/${id}`} />
+        <StoreDetail cacheFirst path="stores" id={id} />
       </Container>
     );
   }
