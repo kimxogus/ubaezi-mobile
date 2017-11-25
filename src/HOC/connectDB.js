@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { denormalize } from 'normalizr';
+import { isNumber } from 'lodash';
 
 import firebase from 'lib/firebase';
 import { setCache as setCacheAC } from 'redux/action/cache';
@@ -93,7 +94,14 @@ export default ({ schema } = {}) => BaseComponent => {
 
         const data = id
           ? snapshotData
-          : denormalize(Object.keys(snapshotData), [schema], entities);
+          : denormalize(Object.keys(snapshotData), [schema], entities).sort(
+              (a, b) => {
+                if (a && isNumber(a.sortOrder) && b && isNumber(b.sortOrder)) {
+                  return a.sortOrder - b.sortOrder;
+                }
+                return 0;
+              }
+            );
 
         setCache(entities);
         this.setState({

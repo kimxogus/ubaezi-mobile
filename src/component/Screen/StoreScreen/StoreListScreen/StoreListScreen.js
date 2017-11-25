@@ -13,7 +13,9 @@ const Container = styled.View`
 export default class StoreListScreen extends Component {
   processQuery = q => {
     const { category } = this.props;
-    return category ? q.equalTo(category, 'category') : q;
+    return (category ? q.equalTo(category, 'category') : q).orderByChild(
+      'sortOrder'
+    );
   };
 
   render() {
