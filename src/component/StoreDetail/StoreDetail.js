@@ -6,8 +6,24 @@ import { List, ListItem } from 'react-native-elements';
 
 import MenuGroups from './MenuGroups';
 
-const keys = ['name', 'branch', 'call', 'address'].map(k => ({
+const keyMap = {
+  name: {
+    label: '상호명',
+  },
+  branch: {
+    label: '지점',
+  },
+  call: {
+    label: '전화번호',
+  },
+  address: {
+    label: '주소',
+  },
+};
+
+const keys = Object.keys(keyMap).map(k => ({
   name: k,
+  label: keyMap[k].label,
 }));
 
 export default class StoreDetail extends PureComponent {
@@ -32,8 +48,13 @@ export default class StoreDetail extends PureComponent {
     return (
       <ScrollView>
         <List>
-          {keys.map(({ name, action }) => (
-            <ListItem key={`${name}`} title={data[name]} onPress={action} />
+          {keys.map(({ name, label, action }) => (
+            <ListItem
+              key={`${name}`}
+              title={data[name] && data[name].length ? data[name] : '-'}
+              subtitle={label}
+              onPress={action}
+            />
           ))}
         </List>
         <MenuGroups storeId={id} />

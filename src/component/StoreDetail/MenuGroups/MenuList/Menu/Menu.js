@@ -8,7 +8,7 @@ export default class Menu extends Component {
       <ListItem
         title={name}
         subtitle={`₩${price}${
-          description && description.length ? `- ${description}` : ''
+          description && description.length ? `  - ${description}` : ''
         }`}
       />
     );
