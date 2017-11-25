@@ -26,18 +26,18 @@ export const storeList = new schema.Array(store);
 export const menu = new schema.Entity(
   'menu',
   {
-    storeId: store,
-    menuGroupId: menuGroup,
-    favoriteUsers: userList,
+    // storeId: store,
+    // menuGroupId: menuGroup,
+    // favoriteUsers: userList,
   },
   { idAttribute: 'id' }
 );
 export const menuList = new schema.Array(menu);
 
 export const menuGroup = new schema.Entity(
-  'menuList',
+  'menuGroup',
   {
-    storeId: store,
+    // storeId: store,
     menus: menuList,
     favoriteUsers: userList,
   },

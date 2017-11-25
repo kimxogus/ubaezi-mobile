@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
 import { List, ListItem } from 'react-native-elements';
 
+import MenuList from './MenuList';
+
 export default class MenuGroups extends Component {
   render() {
-    console.log(this.props.id, this.props.path, this.props.data);
-    return (
+    const { data: menuGroups } = this.props;
+    console.log(menuGroups);
+    return Array.isArray(menuGroups) ? (
       <List>
-        {/* {keys.map(({ name, action }) => (
-        <ListItem key={`${name}`} title={data[name]} onPress={action} />
-      ))} */}
+        {menuGroups.map(menuGroup => {
+          const { id } = menuGroup;
+          return (
+            <MenuList
+              key={id}
+              menuGroup={menuGroup}
+              path="/stores"
+              queryProcessor={this.processQuery}
+              defaultValue={{}}
+            />
+          );
+        })}
       </List>
-    );
+    ) : null;
   }
 }
