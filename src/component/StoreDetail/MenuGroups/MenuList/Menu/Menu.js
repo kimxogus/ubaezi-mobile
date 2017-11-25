@@ -3,8 +3,14 @@ import { ListItem } from 'react-native-elements';
 
 export default class Menu extends Component {
   render() {
-    console.log(this.props);
-    const { name } = this.props;
-    return <ListItem title={name} />;
+    const { name, price, description } = this.props;
+    return (
+      <ListItem
+        title={name}
+        subtitle={`₩${price}${
+          description && description.length ? `- ${description}` : ''
+        }`}
+      />
+    );
   }
 }

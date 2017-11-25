@@ -20,6 +20,7 @@ export default ({ schema } = {}) => BaseComponent => {
       referencePath: PropTypes.string,
       queryProcessor: PropTypes.func,
       defaultValue: PropTypes.any,
+      sort: PropTypes.func,
     };
 
     static defaultProps = {
@@ -27,6 +28,12 @@ export default ({ schema } = {}) => BaseComponent => {
       cacheFirst: false,
       referencePath: null,
       queryProcessor: null,
+      sort: (a, b) => {
+        if (a && isNumber(a.sortOrder) && b && isNumber(b.sortOrder)) {
+          return a.sortOrder - b.sortOrder;
+        }
+        return 0;
+      },
     };
 
     state = {
@@ -44,6 +51,7 @@ export default ({ schema } = {}) => BaseComponent => {
         referencePath,
         cacheFirst,
         defaultValue,
+        sort,
       } = this.props;
       if (cacheFirst && cache && cache[schema.key] && cache[schema.key][id]) {
         this.setState({
@@ -95,12 +103,7 @@ export default ({ schema } = {}) => BaseComponent => {
         const data = id
           ? snapshotData
           : denormalize(Object.keys(snapshotData), [schema], entities).sort(
-              (a, b) => {
-                if (a && isNumber(a.sortOrder) && b && isNumber(b.sortOrder)) {
-                  return a.sortOrder - b.sortOrder;
-                }
-                return 0;
-              }
+              sort
             );
 
         setCache(entities);

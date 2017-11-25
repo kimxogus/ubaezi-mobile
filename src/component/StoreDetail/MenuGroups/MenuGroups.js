@@ -6,7 +6,7 @@ import MenuList from './MenuList';
 export default class MenuGroups extends Component {
   render() {
     const { data: menuGroups } = this.props;
-    console.log(menuGroups);
+
     return Array.isArray(menuGroups) ? (
       <List>
         {menuGroups.map(menuGroup => {

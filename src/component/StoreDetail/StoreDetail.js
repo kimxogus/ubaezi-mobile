@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { ScrollView } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
 import MenuGroups from './MenuGroups';
@@ -28,13 +29,15 @@ export default class StoreDetail extends PureComponent {
 
     const { id } = data;
 
-    return [
-      <List key="info">
-        {keys.map(({ name, action }) => (
-          <ListItem key={`${name}`} title={data[name]} onPress={action} />
-        ))}
-      </List>,
-      <MenuGroups key="menuGroup" storeId={id} />,
-    ];
+    return (
+      <ScrollView>
+        <List>
+          {keys.map(({ name, action }) => (
+            <ListItem key={`${name}`} title={data[name]} onPress={action} />
+          ))}
+        </List>
+        <MenuGroups storeId={id} />
+      </ScrollView>
+    );
   }
 }
