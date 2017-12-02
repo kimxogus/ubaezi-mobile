@@ -1,13 +1,13 @@
 // @flow
 import React, { Component } from 'react';
 import { List, ListItem } from 'react-native-elements';
-import styled from 'styled-components/native';
 
 import Modal, { type Props as ModalProps } from 'component/Modal';
 
 export type Action = {
   name: string,
   action: ?Function,
+  closeAfterAction: ?boolean,
 };
 
 export type Props = {
@@ -27,8 +27,19 @@ export default class ActionModal extends Component<Props & ModalProps> {
     return (
       <Modal ref={ref => (this.modal = ref)} {...props}>
         <List>
-          {actions.map(({ name, action }) => (
-            <ListItem key={name} title={name} onPress={action} />
+          {actions.map(({ name, action, closeAfterAction = true }) => (
+            <ListItem
+              key={name}
+              title={name}
+              onPress={
+                closeAfterAction
+                  ? () => {
+                      action();
+                      this.toggleVisible();
+                    }
+                  : action
+              }
+            />
           ))}
         </List>
       </Modal>

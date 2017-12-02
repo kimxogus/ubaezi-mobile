@@ -12,7 +12,7 @@ import MenuGroups from './MenuGroups';
 
 const keyMap = {
   name: {
-    label: '상호명',
+    label: '이름',
     getActions: ({ id }, dispatch) => [
       {
         name: '수정 제안하기',

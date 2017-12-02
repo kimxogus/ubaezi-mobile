@@ -2,6 +2,7 @@ import { StackNavigator } from 'react-navigation';
 
 import StoreListScreen from 'component/Screen/StoreScreen/StoreListScreen';
 import StoreDetailScreen from 'component/Screen/StoreScreen/StoreDetailScreen';
+import ModifySuggestionScreen from 'component/Screen/StoreScreen/ModifySuggestionScreen';
 
 const initialRouteName = 'StoreList';
 
@@ -12,6 +13,9 @@ const StoreNavigator = StackNavigator(
     },
     StoreDetail: {
       screen: StoreDetailScreen,
+    },
+    ModifySuggestion: {
+      screen: ModifySuggestionScreen,
     },
   },
   {

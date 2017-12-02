@@ -1,11 +1,11 @@
 import { NavigationActions } from 'react-navigation';
 
-export const navigateModify = ({ path, id, dispatch }) => {
+export const navigateModify = ({ path, id, field, dispatch }) => {
   const action = NavigationActions.navigate({
     routeName: 'Store',
     action: NavigationActions.navigate({
       routeName: 'ModifySuggestion',
-      params: { path, id },
+      params: { path, id, field },
     }),
   });
   dispatch(action);
