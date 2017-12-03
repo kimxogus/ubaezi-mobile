@@ -45,6 +45,14 @@ export const menuGroup = new schema.Entity(
 );
 export const menuGroupList = new schema.Array(menuGroup);
 
+export const suggestion = new schema.Entity(
+  'suggestion',
+  {},
+  { idAttribute: 'key' }
+);
+
+export const suggestionList = new schema.Array(suggestion);
+
 export const schemas = {
   user,
   userList,
@@ -54,4 +62,6 @@ export const schemas = {
   menuList,
   menuGroup,
   menuGroupList,
+  suggestion,
+  suggestionList,
 };

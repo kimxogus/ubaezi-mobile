@@ -14,6 +14,11 @@ const store = {
     keyboardType: 'phone-pad',
     validate: value => (value && value.length ? null : '데이터가 비어있어요!'),
   },
+  condition: {
+    label: '배달 조건',
+    keyboardType: 'default',
+    validate: value => (value && value.length ? null : '데이터가 비어있어요!'),
+  },
   address: {
     label: '주소',
     keyboardType: 'default',

@@ -1,6 +1,7 @@
 // @flow
 import { Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
+import { isNil } from 'lodash';
 
 import { select, call, takeLatest, put } from 'redux-saga/effects';
 
@@ -20,16 +21,16 @@ export type Suggestion = {
   path: string,
   suggestionType: 'modify' | 'create' | 'delete',
   id: ?string,
-  data: {
-    [string]: number | string,
-  },
+  field: string,
+  value: string,
 };
 
 const addSuggestion = function*({
   path,
   suggestionType,
   id,
-  data,
+  field,
+  value,
 }: Suggestion) {
   const user = yield select(getUser);
 
@@ -40,7 +41,13 @@ const addSuggestion = function*({
       '이메일 인증 필요',
       '수정 제안 기능은 이메일 인증 후 가능합니다!'
     );
-  } else if (!typeMap[suggestionType] || !path || !id || !data) {
+  } else if (
+    !typeMap[suggestionType] ||
+    !path ||
+    !id ||
+    !field ||
+    isNil(value)
+  ) {
     Alert.alert(
       'Error!',
       '데이터에 오류가 발생했습니다.\n잠시후 다시 시도해주세요.'
@@ -56,18 +63,12 @@ const addSuggestion = function*({
       path,
       id,
       suggestionType,
-      data,
+      field,
+      value,
     });
+    yield put(NavigationActions.back());
 
-    const navigateAction = NavigationActions.navigate({
-      routeName: 'Store',
-      action: NavigationActions.navigate({
-        routeName: 'StoreDetail',
-        params: { id },
-      }),
-    });
-
-    yield put(navigateAction);
+    Alert.alert('완료!', '수정 제안이 생성되었습니다.');
   }
 };
 
@@ -97,16 +98,8 @@ const removeSuggestion = function*({ id }: Suggestion) {
     }
 
     yield call(rsf.database.delete, `/suggestions/${id}`);
-
-    const navigateAction = NavigationActions.navigate({
-      routeName: 'Store',
-      action: NavigationActions.navigate({
-        routeName: 'StoreDetail',
-        params: { id },
-      }),
-    });
-
-    yield put(navigateAction);
+    yield put(NavigationActions.back());
+    Alert.alert('완료!', '수정 제안이 삭제되었습니다.');
   }
 };
 

@@ -105,7 +105,6 @@ export default ({ schema } = {}) => BaseComponent => {
           : denormalize(Object.keys(snapshotData), [schema], entities).sort(
               sort
             );
-
         setCache(entities);
         this.setState({
           loading: false,

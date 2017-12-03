@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, ListItem } from 'react-native-elements';
+import { Card } from 'react-native-elements';
 
 import MenuList from './MenuList';
 
@@ -8,7 +8,7 @@ export default class MenuGroups extends Component {
     const { data: menuGroups } = this.props;
 
     return Array.isArray(menuGroups) ? (
-      <List>
+      <Card title="메뉴">
         {menuGroups.map(menuGroup => {
           const { id } = menuGroup;
           return (
@@ -21,7 +21,7 @@ export default class MenuGroups extends Component {
             />
           );
         })}
-      </List>
+      </Card>
     ) : null;
   }
 }

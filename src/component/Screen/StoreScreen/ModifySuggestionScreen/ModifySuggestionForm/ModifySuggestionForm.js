@@ -30,22 +30,15 @@ export default class ModifySuggestionScreen extends Component {
     });
 
   submit = () => {
-    const {
-      path,
-      id,
-      field,
-      navigation: { dispatch },
-      addSuggestion,
-    } = this.props;
+    const { path, id, field, addSuggestion } = this.props;
     const { value } = this.state;
+
     addSuggestion({
       suggestionType: 'modify',
       path,
       id,
-      data: {
-        [field]: value,
-      },
-      dispatch,
+      field,
+      value,
     });
   };
 

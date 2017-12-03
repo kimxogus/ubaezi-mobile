@@ -34,7 +34,7 @@ export default class FavoriteScreen extends Component {
   };
 
   processQuery(q) {
-    return q.limitToFirst(10);
+    return q;
   }
 
   linkUnistMail = () => {
