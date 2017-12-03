@@ -1,5 +1,5 @@
 // @flow
-import { ADD_SUGGESTION } from './type';
+import { ADD_SUGGESTION, REMOVE_SUGGESTION } from './type';
 
 import { type Suggestion } from 'redux/sagas/suggestion';
 
@@ -8,4 +8,9 @@ const addSuggestion = (suggestion: Suggestion) => ({
   ...suggestion,
 });
 
-export { addSuggestion };
+const removeSuggestion = (id: string) => ({
+  type: REMOVE_SUGGESTION,
+  id,
+});
+
+export { addSuggestion, removeSuggestion };

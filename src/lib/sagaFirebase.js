@@ -1,3 +1,4 @@
+// @flow
 import ReduxSagaFirebase from 'redux-saga-firebase';
 
 import firebase from 'lib/firebase';

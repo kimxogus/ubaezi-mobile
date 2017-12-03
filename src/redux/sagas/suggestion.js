@@ -2,11 +2,11 @@
 import { Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
-import { select, call, takeLatest } from 'redux-saga/effects';
+import { select, call, takeLatest, put } from 'redux-saga/effects';
 
 import rsf from 'lib/sagaFirebase';
 
-import { ADD_SUGGESTION } from 'redux/action/type';
+import { ADD_SUGGESTION, REMOVE_SUGGESTION } from 'redux/action/type';
 
 const getUser = ({ user }) => user;
 
@@ -59,18 +59,60 @@ const addSuggestion = function*({
       data,
     });
 
-    NavigationActions.navigate({
+    const navigateAction = NavigationActions.navigate({
       routeName: 'Store',
       action: NavigationActions.navigate({
         routeName: 'StoreDetail',
         params: { id },
       }),
     });
+
+    yield put(navigateAction);
+  }
+};
+
+const removeSuggestion = function*({ id }: Suggestion) {
+  const user = yield select(getUser);
+
+  if (!user) {
+    Alert.alert('로그인 필요', '즐겨찾기는 로그인 후 가능합니다!');
+  } else if (!user.emailVerified) {
+    Alert.alert(
+      '이메일 인증 필요',
+      '수정 제안 기능은 이메일 인증 후 가능합니다!'
+    );
+  } else if (!id) {
+    Alert.alert(
+      'Error!',
+      '데이터에 오류가 발생했습니다.\n잠시후 다시 시도해주세요.'
+    );
+  } else {
+    const { uid } = user;
+
+    const { uid: userID } = yield call(rsf.database.read, `/suggestions/${id}`);
+
+    if (uid !== userID) {
+      Alert.alert('권한 오류', '본인이 생성한 제안만 삭제 가능합니다.');
+      return;
+    }
+
+    yield call(rsf.database.delete, `/suggestions/${id}`);
+
+    const navigateAction = NavigationActions.navigate({
+      routeName: 'Store',
+      action: NavigationActions.navigate({
+        routeName: 'StoreDetail',
+        params: { id },
+      }),
+    });
+
+    yield put(navigateAction);
   }
 };
 
 const suggestionSaga = function*() {
   yield takeLatest(ADD_SUGGESTION, addSuggestion);
+  yield takeLatest(REMOVE_SUGGESTION, removeSuggestion);
 };
 
 export default suggestionSaga;
