@@ -8,32 +8,7 @@ import {
   Button,
 } from 'react-native-elements';
 
-const fieldMap = {
-  name: {
-    label: '이름',
-    validate: value => (value && value.length ? null : '데이터가 비어있어요!'),
-  },
-  branch: {
-    label: '지점',
-    validate: value => (value && value.length ? null : '데이터가 비어있어요!'),
-  },
-  call: {
-    label: '전화번호',
-    validate: value => (value && value.length ? null : '데이터가 비어있어요!'),
-  },
-  address: {
-    label: '주소',
-    validate: value => (value && value.length ? null : '데이터가 비어있어요!'),
-  },
-  timeFrom: {
-    label: '영업 시작시간',
-    validate: value => (value && value.length ? null : '데이터가 비어있어요!'),
-  },
-  timeTo: {
-    label: '영업 종료시간',
-    validate: value => (value && value.length ? null : '데이터가 비어있어요!'),
-  },
-};
+import { store as fieldMap } from 'lib/fieldMap';
 
 const Container = styled.View`
   display: flex;
@@ -54,11 +29,29 @@ export default class ModifySuggestionScreen extends Component {
       error: fieldMap[this.props.field].validate(text),
     });
 
-  submit = () => {};
+  submit = () => {
+    const {
+      path,
+      id,
+      field,
+      navigation: { dispatch },
+      addSuggestion,
+    } = this.props;
+    const { value } = this.state;
+    addSuggestion({
+      suggestionType: 'modify',
+      path,
+      id,
+      data: {
+        [field]: value,
+      },
+      dispatch,
+    });
+  };
 
   render() {
     const { field, data } = this.props;
-    const { error } = this.state;
+    const { value, error } = this.state;
 
     if (!data) return null;
 
@@ -70,9 +63,13 @@ export default class ModifySuggestionScreen extends Component {
         </Container>
         <Container>
           <FormLabel>기존 데이터</FormLabel>
-          <Text h4>{data[field]}</Text>
+          <Text h4>{data[field] || '-'}</Text>
           <FormLabel>새 데이터</FormLabel>
-          <FormInput onChangeText={this.onChangeText} />
+          <FormInput
+            value={value}
+            onChangeText={this.onChangeText}
+            keyboardType={fieldMap[field].keyboardType}
+          />
           {error ? (
             <FormValidationMessage>{error}</FormValidationMessage>
           ) : null}
