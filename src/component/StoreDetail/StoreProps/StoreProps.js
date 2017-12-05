@@ -5,12 +5,11 @@ import { isNumber } from 'lodash';
 
 import ActionModal from 'component/Modal/ActionModal';
 import { navigateModify } from 'action/suggestion';
-import { suggestion } from 'schema';
 
 const keyMap = {
   name: {
     label: '이름',
-    getActions: ({ id }, dispatch) => [
+    getActions: (dispatch, { id }, suggestions) => [
       {
         name: '수정 제안하기',
         action: () =>
@@ -20,7 +19,7 @@ const keyMap = {
   },
   branch: {
     label: '지점',
-    getActions: ({ id }, dispatch) => [
+    getActions: (dispatch, { id }) => [
       {
         name: '수정 제안하기',
         action: () =>
@@ -30,7 +29,7 @@ const keyMap = {
   },
   call: {
     label: '전화번호',
-    getActions: ({ id }, dispatch) => [
+    getActions: (dispatch, { id }) => [
       {
         name: '수정 제안하기',
         action: () =>
@@ -40,7 +39,7 @@ const keyMap = {
   },
   condition: {
     label: '배달 조건',
-    getActions: ({ id }, dispatch) => [
+    getActions: (dispatch, { id }) => [
       {
         name: '수정 제안하기',
         action: () =>
@@ -50,7 +49,7 @@ const keyMap = {
   },
   timeFrom: {
     label: '영업 시작시간',
-    getActions: ({ id }, dispatch) => [
+    getActions: (dispatch, { id }) => [
       {
         name: '수정 제안하기',
         action: () =>
@@ -60,7 +59,7 @@ const keyMap = {
   },
   timeTo: {
     label: '영업 종료시간',
-    getActions: ({ id }, dispatch) => [
+    getActions: (dispatch, { id }) => [
       {
         name: '수정 제안하기',
         action: () =>
@@ -70,7 +69,7 @@ const keyMap = {
   },
   address: {
     label: '주소',
-    getActions: ({ id }, dispatch) => [
+    getActions: (dispatch, { id }) => [
       {
         name: '수정 제안하기',
         action: () =>
@@ -87,6 +86,10 @@ const keys = Object.keys(keyMap).map(k => ({
 }));
 
 class Row extends Component {
+  static defaultProps = {
+    suggestions: [],
+  };
+
   modal = null;
 
   toggleModal = () => this.modal && this.modal.toggleVisible();
@@ -101,10 +104,10 @@ class Row extends Component {
       dispatch,
     } = this.props;
 
-    console.log(suggestions);
+    console.log(suggestions); // eslint-disable-line
 
     return (
-      <View key={`${name}`}>
+      <View key={name}>
         <ListItem
           title={
             storeData[name] &&
@@ -114,17 +117,11 @@ class Row extends Component {
           }
           subtitle={label}
           onPress={this.toggleModal}
-          badge={
-            suggestions && suggestions.length
-              ? {
-                  value: suggestions.length,
-                }
-              : null
-          }
+          badge={suggestions.length ? { value: suggestions.length } : null}
         />
         <ActionModal
           ref={ref => (this.modal = ref)}
-          actions={getActions(storeData, dispatch)}
+          actions={getActions(dispatch, storeData, suggestions)}
         />
       </View>
     );
@@ -132,15 +129,17 @@ class Row extends Component {
 }
 
 export default class StoreProps extends Component {
-  suggestionsByField = {};
+  state = {
+    suggestionMap: {},
+  };
   componentWillReceiveProps({ data }) {
     if (Array.isArray(data)) {
-      this.suggestionsByField = Object.keys(keyMap).reduce((a, b) => {
+      const suggestionMap = Object.keys(keyMap).reduce((a, b) => {
         a[b] = [];
         return a;
       }, {});
-      data.forEach(s => {
-        this.suggestionsByField[s.field].push(s);
+      this.setState({
+        suggestionMap: data.reduce((a, s) => a[s.field].push(s), suggestionMap),
       });
     }
   }
@@ -148,6 +147,7 @@ export default class StoreProps extends Component {
   render() {
     const { data, loading, storeData, navigation: { dispatch } } = this.props;
     if (loading || !data) return null;
+    const { suggestionMap } = this.state;
 
     return (
       <List>
@@ -157,7 +157,7 @@ export default class StoreProps extends Component {
             {...key}
             storeData={storeData}
             dispatch={dispatch}
-            suggestions={this.suggestionsByField[key.name]}
+            suggestions={suggestionMap[key.name]}
           />
         ))}
       </List>
