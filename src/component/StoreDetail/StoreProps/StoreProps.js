@@ -155,7 +155,7 @@ class Row extends Component {
 
   render() {
     const {
-      user: { uid },
+      user: { uid } = {},
       name,
       label,
       getActions,
