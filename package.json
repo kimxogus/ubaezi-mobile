@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^6.2.1",
+    "exp": "^46.0.3",
     "expo": "^22.0.3",
     "firebase": "^4.3.0",
     "lodash": "^4.17.4",
