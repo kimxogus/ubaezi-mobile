@@ -3,7 +3,7 @@ module.exports = {
     sdkVersion: '22.0.0',
     name: '유배지',
     slug: 'ubaezi',
-    privacy: 'unlisted',
+    privacy: 'public',
     icon: './src/img/ic_launcher.png',
     version: '0.4.0',
     scheme: 'ubeazi',
