@@ -261,6 +261,7 @@ export default class StoreProps extends Component {
       load,
     } = this.props;
     const { suggestionMap } = this.state;
+    console.log(this.props.data, suggestionMap);
 
     return (
       <List>

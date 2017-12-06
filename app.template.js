@@ -4,6 +4,7 @@ module.exports = {
     name: '유배지',
     slug: 'ubaezi',
     privacy: 'unlisted',
+    icon: './src/img/ic_launcher.png',
     version: '0.4.0',
     scheme: 'ubeazi',
     android: {
