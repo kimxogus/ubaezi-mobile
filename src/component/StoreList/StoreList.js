@@ -41,7 +41,11 @@ export default class StoreList extends PureComponent {
   });
 
   renderItem = ({ item }) => (
-    <StoreItem item={item} favorite={!!this.state.favorites[item.id]} />
+    <StoreItem
+      key={item.id}
+      item={item}
+      favorite={!!this.state.favorites[item.id]}
+    />
   );
 
   render() {

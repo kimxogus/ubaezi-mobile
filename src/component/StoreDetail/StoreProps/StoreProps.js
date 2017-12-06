@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import { View, Linking } from 'react-native';
+import { List, Card, ListItem } from 'react-native-elements';
 import { isNumber } from 'lodash';
 
 import ActionModal from 'component/Modal/ActionModal';
@@ -9,11 +9,16 @@ import { navigateModify } from 'action/suggestion';
 const keyMap = {
   name: {
     label: '이름',
-    getActions: (dispatch, { id }, suggestions) => [
+    getActions: (dispatch, { id }) => [
       {
         name: '수정 제안하기',
         action: () =>
-          navigateModify({ path: 'stores', id, field: 'name', dispatch }),
+          navigateModify({
+            path: 'stores',
+            targetId: id,
+            field: 'name',
+            dispatch,
+          }),
       },
     ],
   },
@@ -23,17 +28,33 @@ const keyMap = {
       {
         name: '수정 제안하기',
         action: () =>
-          navigateModify({ path: 'stores', id, field: 'branch', dispatch }),
+          navigateModify({
+            path: 'stores',
+            targetId: id,
+            field: 'branch',
+            dispatch,
+          }),
       },
     ],
   },
   call: {
     label: '전화번호',
-    getActions: (dispatch, { id }) => [
+    getActions: (dispatch, { id, call }) => [
+      {
+        name: '전화하기',
+        action: () => {
+          Linking.openURL(`tel:${call}`);
+        },
+      },
       {
         name: '수정 제안하기',
         action: () =>
-          navigateModify({ path: 'stores', id, field: 'call', dispatch }),
+          navigateModify({
+            path: 'stores',
+            targetId: id,
+            field: 'call',
+            dispatch,
+          }),
       },
     ],
   },
@@ -43,7 +64,12 @@ const keyMap = {
       {
         name: '수정 제안하기',
         action: () =>
-          navigateModify({ path: 'stores', id, field: 'condition', dispatch }),
+          navigateModify({
+            path: 'stores',
+            targetId: id,
+            field: 'condition',
+            dispatch,
+          }),
       },
     ],
   },
@@ -53,7 +79,12 @@ const keyMap = {
       {
         name: '수정 제안하기',
         action: () =>
-          navigateModify({ path: 'stores', id, field: 'timeFrom', dispatch }),
+          navigateModify({
+            path: 'stores',
+            targetId: id,
+            field: 'timeFrom',
+            dispatch,
+          }),
       },
     ],
   },
@@ -63,7 +94,12 @@ const keyMap = {
       {
         name: '수정 제안하기',
         action: () =>
-          navigateModify({ path: 'stores', id, field: 'timeTo', dispatch }),
+          navigateModify({
+            path: 'stores',
+            targetId: id,
+            field: 'timeTo',
+            dispatch,
+          }),
       },
     ],
   },
@@ -73,9 +109,23 @@ const keyMap = {
       {
         name: '수정 제안하기',
         action: () =>
-          navigateModify({ path: 'stores', id, field: 'address', dispatch }),
+          navigateModify({
+            path: 'stores',
+            targetId: id,
+            field: 'address',
+            dispatch,
+          }),
       },
     ],
+  },
+};
+
+const style = {
+  suggestionList: {
+    borderTopWidth: 0,
+  },
+  suggestion: {
+    borderBottomWidth: 0,
   },
 };
 
@@ -94,8 +144,18 @@ class Row extends Component {
 
   toggleModal = () => this.modal && this.modal.toggleVisible();
 
+  onPressSuggestion = (id, isLiked) => {
+    const { dispatch, unlikeByTarget, like, load } = this.props;
+    if (isLiked) {
+      dispatch(unlikeByTarget('/suggestions', id, load));
+    } else {
+      dispatch(like('/suggestions', id, load));
+    }
+  };
+
   render() {
     const {
+      user: { uid },
       name,
       label,
       getActions,
@@ -103,8 +163,6 @@ class Row extends Component {
       suggestions,
       dispatch,
     } = this.props;
-
-    console.log(suggestions); // eslint-disable-line
 
     return (
       <View key={name}>
@@ -121,7 +179,48 @@ class Row extends Component {
         />
         <ActionModal
           ref={ref => (this.modal = ref)}
-          actions={getActions(dispatch, storeData, suggestions)}
+          header={
+            suggestions ? (
+              <Card title="제안 리스트">
+                <List containerStyle={style.suggestionList}>
+                  {suggestions
+                    .sort((a, b) => (b.likeCount || 0) - (a.likeCount || 0))
+                    .map(s => (
+                      <ListItem
+                        key={s.id}
+                        title={s.value}
+                        containerStyle={style.suggestion}
+                        rightIcon={{
+                          name:
+                            s.likes &&
+                            Object.keys(s.likes).some(id => s.likes[id] === uid)
+                              ? 'favorite'
+                              : 'favorite-border',
+                          style: { color: 'palevioletred' },
+                        }}
+                        badge={
+                          s.likes && Object.keys(s.likes).length
+                            ? { value: Object.keys(s.likes).length }
+                            : null
+                        }
+                        onPressRightIcon={() =>
+                          this.onPressSuggestion(
+                            s.id,
+                            !!(
+                              s.likes &&
+                              Object.keys(s.likes).some(
+                                id => s.likes[id] === uid
+                              )
+                            )
+                          )
+                        }
+                      />
+                    ))}
+                </List>
+              </Card>
+            ) : null
+          }
+          actions={getActions(dispatch, storeData)}
         />
       </View>
     );
@@ -132,21 +231,35 @@ export default class StoreProps extends Component {
   state = {
     suggestionMap: {},
   };
+
   componentWillReceiveProps({ data }) {
+    const suggestionMap = Object.keys(keyMap).reduce((a, b) => {
+      a[b] = [];
+      return a;
+    }, {});
     if (Array.isArray(data)) {
-      const suggestionMap = Object.keys(keyMap).reduce((a, b) => {
-        a[b] = [];
-        return a;
-      }, {});
       this.setState({
-        suggestionMap: data.reduce((a, s) => a[s.field].push(s), suggestionMap),
+        suggestionMap: data.reduce((a, s) => {
+          a[s.field].push(s);
+          return a;
+        }, suggestionMap),
+      });
+    } else {
+      this.setState({
+        suggestionMap,
       });
     }
   }
 
   render() {
-    const { data, loading, storeData, navigation: { dispatch } } = this.props;
-    if (loading || !data) return null;
+    const {
+      storeData,
+      user,
+      like,
+      unlikeByTarget,
+      navigation: { dispatch },
+      load,
+    } = this.props;
     const { suggestionMap } = this.state;
 
     return (
@@ -155,6 +268,10 @@ export default class StoreProps extends Component {
           <Row
             key={key.name}
             {...key}
+            user={user}
+            like={like}
+            load={load}
+            unlikeByTarget={unlikeByTarget}
             storeData={storeData}
             dispatch={dispatch}
             suggestions={suggestionMap[key.name]}

@@ -20,7 +20,7 @@ const typeMap = {
 export type Suggestion = {
   path: string,
   suggestionType: 'modify' | 'create' | 'delete',
-  id: ?string,
+  targetId: ?string,
   field: string,
   value: string,
 };
@@ -28,7 +28,7 @@ export type Suggestion = {
 const addSuggestion = function*({
   path,
   suggestionType,
-  id,
+  targetId,
   field,
   value,
 }: Suggestion) {
@@ -44,7 +44,7 @@ const addSuggestion = function*({
   } else if (
     !typeMap[suggestionType] ||
     !path ||
-    !id ||
+    !targetId ||
     !field ||
     isNil(value)
   ) {
@@ -61,7 +61,7 @@ const addSuggestion = function*({
       uid,
       createAt,
       path,
-      id,
+      targetId,
       suggestionType,
       field,
       value,
@@ -72,7 +72,7 @@ const addSuggestion = function*({
   }
 };
 
-const removeSuggestion = function*({ id }: Suggestion) {
+const removeSuggestion = function*({ targetId }: Suggestion) {
   const user = yield select(getUser);
 
   if (!user) {
@@ -82,7 +82,7 @@ const removeSuggestion = function*({ id }: Suggestion) {
       '이메일 인증 필요',
       '수정 제안 기능은 이메일 인증 후 가능합니다!'
     );
-  } else if (!id) {
+  } else if (!targetId) {
     Alert.alert(
       'Error!',
       '데이터에 오류가 발생했습니다.\n잠시후 다시 시도해주세요.'
@@ -90,14 +90,17 @@ const removeSuggestion = function*({ id }: Suggestion) {
   } else {
     const { uid } = user;
 
-    const { uid: userID } = yield call(rsf.database.read, `/suggestions/${id}`);
+    const { uid: userID } = yield call(
+      rsf.database.read,
+      `/suggestions/${targetId}`
+    );
 
     if (uid !== userID) {
       Alert.alert('권한 오류', '본인이 생성한 제안만 삭제 가능합니다.');
       return;
     }
 
-    yield call(rsf.database.delete, `/suggestions/${id}`);
+    yield call(rsf.database.delete, `/suggestions/${targetId}`);
     yield put(NavigationActions.back());
     Alert.alert('완료!', '수정 제안이 삭제되었습니다.');
   }

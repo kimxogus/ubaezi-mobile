@@ -1,41 +1,13 @@
 import { schema } from 'normalizr';
 
-export const user = new schema.Entity(
-  'user',
-  {
-    favorites: {
-      // stores: storeList,
-      // menus: menuList,
-      // menuGroup: menuGroupList,
-    },
-  },
-  { idAttribute: 'id' }
-);
-export const userList = new schema.Array(user);
+export const user = new schema.Entity('users', {}, { idAttribute: 'id' });
 
-export const store = new schema.Entity(
-  'store',
-  {
-    // menus: menuList,
-    // favoriteUsers: userList,
-  },
-  { idAttribute: 'id' }
-);
-export const storeList = new schema.Array(store);
+export const store = new schema.Entity('stores', {}, { idAttribute: 'id' });
 
-export const menu = new schema.Entity(
-  'menu',
-  {
-    // storeId: store,
-    // menuGroupId: menuGroup,
-    // favoriteUsers: userList,
-  },
-  { idAttribute: 'id' }
-);
-export const menuList = new schema.Array(menu);
+export const menu = new schema.Entity('menus', {}, { idAttribute: 'id' });
 
 export const menuGroup = new schema.Entity(
-  'menuGroup',
+  'menuGroups',
   {
     // storeId: store,
     // menus: menuList,
@@ -43,25 +15,17 @@ export const menuGroup = new schema.Entity(
   },
   { idAttribute: 'id' }
 );
-export const menuGroupList = new schema.Array(menuGroup);
 
 export const suggestion = new schema.Entity(
-  'suggestion',
+  'suggestions',
   {},
-  { idAttribute: 'key' }
+  { idAttribute: 'id' }
 );
-
-export const suggestionList = new schema.Array(suggestion);
 
 export const schemas = {
   user,
-  userList,
   store,
-  storeList,
   menu,
-  menuList,
   menuGroup,
-  menuGroupList,
   suggestion,
-  suggestionList,
 };

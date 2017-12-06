@@ -1,11 +1,11 @@
 import { NavigationActions } from 'react-navigation';
 
-export const navigateModify = ({ path, id, field, dispatch }) => {
+export const navigateModify = ({ path, targetId, field, dispatch }) => {
   const action = NavigationActions.navigate({
     routeName: 'Store',
     action: NavigationActions.navigate({
       routeName: 'ModifySuggestion',
-      params: { path, id, field },
+      params: { path, targetId, field },
     }),
   });
   dispatch(action);
@@ -22,12 +22,12 @@ export const navigateCreate = ({ path, dispatch }) => {
   dispatch(action);
 };
 
-export const navigateDelete = ({ path, id, dispatch }) => {
+export const navigateDelete = ({ path, targtetId, dispatch }) => {
   const action = NavigationActions.navigate({
     routeName: 'Store',
     action: NavigationActions.navigate({
       routeName: 'DeleteSuggestion',
-      params: { path, id },
+      params: { path, targtetId },
     }),
   });
   dispatch(action);

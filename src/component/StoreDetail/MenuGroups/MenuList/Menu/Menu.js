@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 const style = {
@@ -14,6 +15,7 @@ export default class Menu extends Component {
         subtitle={`₩${price}${
           description && description.length ? `  - ${description}` : ''
         }`}
+        rightIcon={<View />}
       />
     );
   }

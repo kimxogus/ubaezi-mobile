@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ScrollView } from 'react-native';
@@ -29,7 +28,6 @@ export default class StoreDetail extends Component {
       <ScrollView>
         <StoreProps
           storeData={data}
-          cacheFirst
           defaultValue={[]}
           referencePath={`suggestions`}
           path={`/stores/${id}/suggestions`}
